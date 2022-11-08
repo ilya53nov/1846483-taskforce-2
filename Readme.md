@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Илья Хицков](https://up.htmlacademy.ru/nodejs-2/2/user/1846483).
-* Наставник: `Неизвестно`.
+* Наставник: [Владислав Поклонский](https://htmlacademy.ru/profile/id2210683).
 
 ---
 
