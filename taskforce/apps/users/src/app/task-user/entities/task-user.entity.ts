@@ -1,4 +1,4 @@
-import { User, UserRole,City} from '@taskforce/shared-types';
+import { User, UserRole,City, Review} from '@taskforce/shared-types';
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUNDS } from '../task-user.constants';
 
@@ -12,6 +12,7 @@ export class TaskUserEntity implements User {
   public passwordHash: string;
   public role: UserRole;
   public city: City;
+  public _reviews: Review[];
 
   constructor(taskUser: User) {
      this.fillEntity(taskUser);
@@ -41,5 +42,6 @@ export class TaskUserEntity implements User {
     this.passwordHash = taskUser.passwordHash;
     this.role = taskUser.role;
     this.city = taskUser.city;
+    this._reviews = taskUser._reviews
   }  
 }

@@ -1,4 +1,5 @@
 import { City } from './city.enum';
+import { Review } from './review.interface';
 import { UserRole } from './user-role.enum';
 
 export interface User {
@@ -11,4 +12,5 @@ export interface User {
   avatar?: string;
   dateBirth: Date;
   passwordHash: string;
+  _reviews?: Review[];
 }

@@ -1,4 +1,39 @@
 # Get user by ID
-GET http://localhost:3333/api/user/540a8613-9952-45ee-99e3-6f822cdab9c6 HTTP/1.1
+GET http://localhost:3334/api/user/494e6588-b0e4-44c2-b3f1-1178bb6ecfc9 HTTP/1.1
 
+###
+
+# Update user by ID
+PUT http://localhost:3334/api/user/494e6588-b0e4-44c2-b3f1-1178bb6ecfc9 HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstname": "Keks007",
+  "lastname": "Keks",
+  "dateBirth": "2020-12-12",
+  "info": "qwerty",
+  "specialization": "ytrewq",
+  "city": "Москва"
+}
+###
+
+# Change password user by ID
+PUT http://localhost:3334/api/user/66f84b3d-5113-430f-a95d-f0dfd2ac73a2/change-password HTTP/1.1
+Content-Type: application/json
+
+{
+  "currentPassword": "1234567",
+  "newPassword": "1234567"
+}
+###
+
+# Leave review user by ID
+PUT  http://localhost:3334/api/user/a5d10c12-10aa-4425-b03d-e28feefb0e77/review HTTP/1.1
+Content-Type: application/json
+
+{
+  "text": "retertret",
+  "idCompletedTask": "ewr234231ds",
+  "score": 7
+}
 ###

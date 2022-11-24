@@ -10,9 +10,9 @@ export class TaskUserMemoryRepository implements CRUDRepository<TaskUserEntity, 
   private repository: {[key: string]: User} = {};
 
   public async create(item: TaskUserEntity): Promise<User> {
-    const entry = { ...item.toObject(), _id: crypto.randomUUID(), _createdAt: dayjs().format()};
+    const entry = { ...item.toObject(), _id: crypto.randomUUID(), _createdAt: dayjs().format(), _reviews: []};
+    
     this.repository[entry._id] = entry;
-    console.log({...entry});
     return {...entry};
   }
 
@@ -41,6 +41,6 @@ export class TaskUserMemoryRepository implements CRUDRepository<TaskUserEntity, 
 
   public async update(id: string, item: TaskUserEntity): Promise<User> {
     this.repository[id] = {...item.toObject(), _id: id};
-    return this.findById(id);
+    return this.repository[id];
   }
 }
