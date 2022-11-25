@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   HttpStatus,
+  Headers,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiTag, Route } from '@taskforce/shared-types';
@@ -24,8 +25,8 @@ export class CommentsController {
     status: HttpStatus.CREATED,
   })
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentsService.create(createCommentDto);
+  create(@Body() createCommentDto: CreateCommentDto, @Headers('user-id') idUser: string) {
+    return this.commentsService.create(idUser, createCommentDto);
   }
 
   @ApiResponse({
@@ -33,8 +34,16 @@ export class CommentsController {
     status: HttpStatus.OK,
   })
   @Get(`${Route.Task}/:id`)
-  getCommentsTask(@Param('id')idTask: string) {
+  getCommentsTask(@Param('id') idTask: string) {
     return this.commentsService.getCommentsTask(idTask);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+  })
+  @Delete(':id')
+  deleteComment(@Param('id')id: string) {
+    return this.commentsService.deleteComment(id);
   }
 
 }

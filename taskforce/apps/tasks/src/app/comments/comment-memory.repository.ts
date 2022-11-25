@@ -10,7 +10,7 @@ export class CommentMemoryRepository implements CRUDRepository<CommentEntity, st
   private repository: {[key: string]: Comment} = {};
 
   public async create(item: CommentEntity): Promise<Comment> {
-    const entry = { ...item.toObject(), _id: crypto.randomUUID(), _createdAt: dayjs().format()};
+    const entry = { ...item.toObject(), _id: crypto.randomUUID(), createdAt: dayjs().format()};
     this.repository[entry._id] = entry;
     console.log({...entry});
     return {...entry};
@@ -22,6 +22,17 @@ export class CommentMemoryRepository implements CRUDRepository<CommentEntity, st
     }
 
     return null;
+  }
+
+  public async findByTask(idTask: string): Promise<Comment[]> {
+    const existComment = Object.values(this.repository)
+      .filter((commentItem) => commentItem.idTask === idTask);
+
+    if (! existComment) {
+      return null;
+    }
+
+    return [...existComment];
   }
 
   public async destroy(id: string): Promise<void> {
