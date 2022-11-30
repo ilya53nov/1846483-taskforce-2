@@ -4,14 +4,17 @@ import dayjs = require('dayjs');
 import { CreateUserDto } from './dto/create-user.dto';
 import { TaskUserEntity } from '../task-user/entities/task-user.entity';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
-import { TaskUserMemoryRepository } from '../task-user/task-user-memory.repository';
+
 import { AuthUserDescription } from './auth.constants';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserRdo } from '../task-user/rdo/user.rdo';
+import { TaskUserRepository } from '../task-user/task-user.repository';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly taskUserRepository: TaskUserMemoryRepository) {}
+  constructor(
+    private readonly taskUserRepository: TaskUserRepository
+    ) {}
 
   public async register(userDto: CreateUserDto) {
     const taskUser = { ...userDto, avatar: '', dateBirth: dayjs(userDto.dateBirth).toDate(), passwordHash: ''};
