@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { City, Collection, User, UserRole } from '@taskforce/shared-types';
+import { City, Collection, Review, User, UserRole } from '@taskforce/shared-types';
 
 @Schema({
   collection: Collection.Users,
@@ -42,6 +42,9 @@ export class TaskUserModel extends Document implements User {
 
   @Prop()
   avatar?: string;
+
+  @Prop()
+  _reviews?: Review[];
 
   @Prop({
     required: true,
