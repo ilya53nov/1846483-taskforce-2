@@ -39,13 +39,13 @@ User-Id: 123
 ###
 
 # Get my tasks
-DELETE  http://localhost:3335/api/tasks/123 HTTP/1.1
+DELETE http://localhost:3335/api/tasks/123 HTTP/1.1
 User-Id: 123 
 
 ###
 
 # Change status task
-PATCH   http://localhost:3335/api/tasks/123 HTTP/1.1
+PATCH http://localhost:3335/api/tasks/123 HTTP/1.1
 Content-Type: application/json
 User-Id: 123 
 
@@ -56,13 +56,13 @@ User-Id: 123
 ###
 
 # Reaction to the task
-POST   http://localhost:3335/api/tasks/123 HTTP/1.1
+POST http://localhost:3335/api/tasks/123 HTTP/1.1
 User-Id: 123 
 
 ###
 
 # Set executer task
-POST   http://localhost:3335/api/tasks/123/executer HTTP/1.1
+POST http://localhost:3335/api/tasks/123/executer HTTP/1.1
 Content-Type: application/json
 User-Id: 123 
 

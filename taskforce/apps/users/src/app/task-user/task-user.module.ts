@@ -1,11 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TaskUserService } from './task-user.service';
 import { TaskUserController } from './task-user.controller';
-import { TaskUserMemoryRepository } from './task-user-memory.repository';
+import { TaskUserRepository } from './task-user.repository';
+import { MongooseModule } from '@nestjs/mongoose';
+import { TaskUserModel, TaskUserSchema } from './task-user.model';
 
 @Module({
+  imports: [MongooseModule.forFeature([
+    { name: TaskUserModel.name, schema: TaskUserSchema }
+  ])],
   controllers: [TaskUserController],
-  providers: [TaskUserMemoryRepository, TaskUserService],
-  exports: [TaskUserMemoryRepository, TaskUserModule]
+  providers: [TaskUserRepository, TaskUserService],
+  exports: [TaskUserRepository, TaskUserModule]
 })
 export class TaskUserModule {}
