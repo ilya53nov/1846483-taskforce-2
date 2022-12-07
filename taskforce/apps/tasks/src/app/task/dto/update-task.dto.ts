@@ -17,7 +17,7 @@ export class UpdateTaskDto {
     description: 'Категория задания',
     example: 'Бытовая техника'
   })
-  category: string;
+  categoryTitle: string;
 
   @ApiProperty({
     description: 'Стоимость',

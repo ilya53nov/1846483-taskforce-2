@@ -1,73 +1,86 @@
 # Create a new task
-POST http://localhost:3335/api/tasks/task HTTP/1.1
+POST http://localhost:3335/api/tasks HTTP/1.1
 Content-Type: application/json
-User-Id: 123 
+User-Id: 1234 
 
 {
   "header": "dsfgdsgds",
   "description": "sdgdsgds",
-  "category": "dfsgsdg",
-  "tags": "sdfsdssdd"
+  "categoryTitle": "TS",
+  "tags": "sdfsdssdd",
+  "cost": 1000
 }
 
 ###
 
-# Get my tasks
-GET http://localhost:3335/api/tasks/my-tasks HTTP/1.1
+# Get new tasks
+GET http://localhost:3335/api/tasks/new HTTP/1.1
 User-Id: 123 
 
 ###
 
+# Get my tasks
+GET http://localhost:3335/api/tasks/my-tasks?status=New HTTP/1.1
+User-Id: 1234
+
+###
+
 # Get task by id
-GET http://localhost:3335/api/tasks/123 HTTP/1.1
+GET http://localhost:3335/api/tasks/f4e3fc0e-6b01-44af-abf4-38d488424630 HTTP/1.1
 User-Id: 123 
 
 ###
 
 # Update task
-PATCH http://localhost:3335/api/tasks/123 HTTP/1.1
+PATCH http://localhost:3335/api/tasks/f4e3fc0e-6b01-44af-abf4-38d488424630 HTTP/1.1
 Content-Type: application/json
 User-Id: 123 
 
 {
   "header": "dsfgdsgds",
-  "description": "sdgdsgds",
-  "category": "dfsgsdg",
+  "description": "ввввввв",
+  "categoryTitle": "BackEnd",
   "tags": "sdfsdssdd"
 }
 
 ###
 
-# Get my tasks
-DELETE http://localhost:3335/api/tasks/123 HTTP/1.1
+# Delete my tasks
+DELETE http://localhost:3335/api/tasks/61d761ce-de0e-47c9-9b08-5177edc1955d HTTP/1.1
 User-Id: 123 
 
 ###
 
 # Change status task
-PATCH http://localhost:3335/api/tasks/123 HTTP/1.1
+PATCH http://localhost:3335/api/tasks/4d2f0092-519e-473b-a2a4-075cae5d0ce3/change-status HTTP/1.1
 Content-Type: application/json
 User-Id: 123 
 
 {
-  "newStatus": "В работе"
+  "newStatus": "InWork"
 }
 
 ###
 
 # Reaction to the task
-POST http://localhost:3335/api/tasks/123 HTTP/1.1
-User-Id: 123 
+POST http://localhost:3335/api/tasks/b7518b68-e6b6-463f-8859-18c6b3cf520b/reaction HTTP/1.1
+User-Id: 123
 
 ###
 
 # Set executer task
-POST http://localhost:3335/api/tasks/123/executer HTTP/1.1
+POST http://localhost:3335/api/tasks/b7518b68-e6b6-463f-8859-18c6b3cf520b/executer HTTP/1.1
 Content-Type: application/json
 User-Id: 123 
 
 {
-  "idExecuter": "122"
+  "executerId": "122"
 }
+
+###
+
+# Get task's reactions
+GET http://localhost:3335/api/tasks/b7518b68-e6b6-463f-8859-18c6b3cf520b/reactions HTTP/1.1
+User-Id: 123 
 
 ###
