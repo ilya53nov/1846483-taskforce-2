@@ -4,19 +4,19 @@ Content-Type: application/json
 User-Id: 123 
 
 {
-  "text": "всё очень круто",
-  "idTask": "4553453"
+  "text": "класс",
+  "taskId": "7ca3b9fa-27bb-4364-80bc-3f2a1e506025"
 }
 
 ###
 
 # Get comments 
-GET http://localhost:3335/api/comments/task/4553453 HTTP/1.1
+GET http://localhost:3335/api/comments/task/7ca3b9fa-27bb-4364-80bc-3f2a1e506025 HTTP/1.1
 
 ###
 
 # Delete comment
-DELETE  http://localhost:3335/api/comments/5e1d6100-6c69-4830-93a7-d57a13075c09 HTTP/1.1
+DELETE  http://localhost:3335/api/comments/201ca431-4e94-44b1-acb5-066ca929036f HTTP/1.1
 
 
 ###
