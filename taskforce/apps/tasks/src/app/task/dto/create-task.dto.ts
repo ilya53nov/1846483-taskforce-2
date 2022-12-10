@@ -2,6 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTaskDto {
   @ApiProperty({
+    description: 'Индификатор пользователя',
+    example: 'qwe1'
+  })
+  userId: string;
+
+  @ApiProperty({
     description: 'Заголовок задания',
     example: 'Починить плиту'
   })
@@ -17,7 +23,7 @@ export class CreateTaskDto {
     description: 'Категория задания',
     example: 'Бытовая техника'
   })
-  category: string;
+  categoryTitle: string;
 
   @ApiProperty({
     description: 'Стоимость',
@@ -29,7 +35,7 @@ export class CreateTaskDto {
     description: 'Срок исполнения',
     example: '12.12.2022'
   })
-  dateExecution?: Date;
+  dateExecutionAt?: Date;
 
   @ApiProperty({
     description: 'Изображение',

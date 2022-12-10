@@ -1,0 +1,4 @@
+# Get categories
+GET http://localhost:3335/api/categories HTTP/1.1
+
+###

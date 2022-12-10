@@ -2,7 +2,7 @@ import { TaskStatus } from '@taskforce/shared-types';
 import { Expose } from 'class-transformer';
 
 export class TaskRdo {
-  @Expose({name: '_id'})
+  @Expose()
   id: string;
 
   @Expose()
@@ -12,13 +12,13 @@ export class TaskRdo {
   description: string;
 
   @Expose()
-  category: string;
+  categoryTitle: string;
 
   @Expose()
   cost: number;
 
   @Expose()
-  dateExecution?: Date;
+  dateExecutionAt?: Date;
 
   @Expose()
   image: string;
@@ -31,4 +31,7 @@ export class TaskRdo {
 
   @Expose()
   status: TaskStatus;
+
+  @Expose()
+  createdAt: Date;
 }

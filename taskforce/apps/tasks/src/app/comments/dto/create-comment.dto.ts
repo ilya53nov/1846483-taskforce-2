@@ -11,5 +11,5 @@ export class CreateCommentDto {
     description: 'Индификатор задачи',
     example: '4553453'
   })
-  idTask: string;
+  taskId: string;
 }

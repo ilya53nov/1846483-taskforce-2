@@ -5,5 +5,5 @@ export class SetExecuterDto {
     description: 'Индификатор исполнителя',
     example: '123412412'
   })
-  idExecuter: string;
+  executerId: string;
 }

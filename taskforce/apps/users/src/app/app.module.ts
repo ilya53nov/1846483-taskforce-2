@@ -9,6 +9,7 @@ import { USER_ENV_FILE_PATH } from './app.constant';
 import { validateEnvironments } from './env.validation';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbConfig } from '../config/mongodb.config';
+import { TaskUserService } from './task-user/task-user.service';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { getMongoDbConfig } from '../config/mongodb.config';
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TaskUserService],
+  exports: [TaskUserModule],
 })
 export class AppModule {}

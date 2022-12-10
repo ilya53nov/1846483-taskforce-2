@@ -7,5 +7,9 @@ export enum Route {
   Task = 'task',
   MyTasks = 'my-tasks',
   NewTasks = 'new',
-  Comments = 'comments'
+  Comments = 'comments',
+  Categories = 'categories',
 }
+
+export const paramIdDescription = 'id';
+export const routeIdDescription = '/:id';
