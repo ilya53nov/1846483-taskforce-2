@@ -2,7 +2,6 @@ import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { getMongoConnectionString } from '@taskforce/core';
 
-
 export function getMongoDbConfig(): MongooseModuleAsyncOptions {
   return {
     useFactory: async (configService: ConfigService) => ({
