@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CRUDRepository } from '@taskforce/core';
 import { Task, TaskStatus, UserRole } from '@taskforce/shared-types';
 import { PrismaService } from '../prisma/prisma.service';
+import { TaskQuery } from './query/task.query';
 import { TaskEntity } from './task.entity';
 
 @Injectable()
@@ -22,11 +23,27 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
     });
   }
 
-  public async getNewTasks(): Promise<Task[]> {
+  public async getNewTasks({ limit, page, sortDirection, categories}: TaskQuery): Promise<Task[]> {
     return await this.prisma.task.findMany({
       where: {
-        status: TaskStatus.New
-      }
+        status: TaskStatus.New,
+        category: {
+          title: {
+            in: categories
+          }
+        }
+      },
+      take: limit,
+      include: {
+        comments: true,
+        category: true,
+      },
+      orderBy: [
+        {
+          createdAt: sortDirection
+        }
+      ],
+      skip: page > 0 ? limit * (page - 1) : undefined,
     });
   }  
 
