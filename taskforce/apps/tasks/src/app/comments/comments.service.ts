@@ -3,6 +3,7 @@ import { fillObject } from '@taskforce/core';
 import { CommentEntity } from './comment.entity';
 import { CommentsRepository } from './comments.repository';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { CommentQuery } from './query/comment.query';
 import { CommentRdo } from './rdo/comment.rdo';
 
 @Injectable()
@@ -17,8 +18,8 @@ export class CommentsService {
     return fillObject(CommentRdo, newComment);
   }
 
-  public async getCommentsTask(idTask: string) {
-    const existComments = await this.commentRepository.findByTask(idTask);
+  public async getCommentsTask(idTask: string, query: CommentQuery) {
+    const existComments = await this.commentRepository.findByTask(idTask, query);
 
     return existComments.map((comment) => fillObject(CommentRdo, comment));
   }

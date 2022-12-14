@@ -7,11 +7,13 @@ import {
   Delete,
   HttpStatus,
   Headers,
+  Query,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiTag, paramIdDescription, Route, routeIdDescription } from '@taskforce/shared-types';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { CommentQuery } from './query/comment.query';
 import { CommentRdo } from './rdo/comment.rdo';
 
 @ApiTags(ApiTag.Comments)
@@ -33,8 +35,8 @@ export class CommentsController {
     status: HttpStatus.OK,
   })
   @Get(`${Route.Task}${routeIdDescription}`)
-  getCommentsTask(@Param(paramIdDescription) idTask: string) {
-    return this.commentsService.getCommentsTask(idTask);
+  getCommentsTask(@Param(paramIdDescription) idTask: string, @Query() query: CommentQuery) {
+    return this.commentsService.getCommentsTask(idTask, query);
   }
 
   @ApiResponse({
