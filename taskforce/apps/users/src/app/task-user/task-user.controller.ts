@@ -5,6 +5,7 @@ import {
   Param,
   HttpStatus,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { TaskUserService } from './task-user.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -12,8 +13,11 @@ import { ApiTag, Route } from '@taskforce/shared-types';
 import { UpdateTaskUserDto } from './dto/update-task-user.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { ReviewDto } from './dto/review.dto';
+import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
+import { AccessTokenGuard } from '../auth/guards/access-token.guard';
 
 @ApiTags(ApiTag.Users)
+@UseGuards(AccessTokenGuard)
 @Controller(Route.User)
 export class TaskUserController {
   constructor(private readonly taskUserService: TaskUserService) {}
@@ -22,7 +26,7 @@ export class TaskUserController {
   @ApiResponse({
     status: HttpStatus.OK,
   })
-  async getUser(@Param('id') id: string) {
+  async getUser(@Param('id', MongoidValidationPipe) id: string) {
     return await this.taskUserService.getUser(id);
   }
 

@@ -10,6 +10,7 @@ import { validateEnvironments } from './env.validation';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbConfig } from '../config/mongodb.config';
 import { TaskUserService } from './task-user/task-user.service';
+import { jwtAccessOptions, jwtRefreshOptions } from '../config/jwt.config';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { TaskUserService } from './task-user/task-user.service';
       cache: true,
       isGlobal: true,
       envFilePath: USER_ENV_FILE_PATH,
-      load: [databaseConfig],
+      load: [databaseConfig, jwtAccessOptions, jwtRefreshOptions],
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(
