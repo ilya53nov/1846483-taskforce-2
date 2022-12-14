@@ -1,15 +1,16 @@
 # Get user by ID
-GET http://localhost:3334/api/user/b65174db-27d9-4f46-be6d-59d560260f90 HTTP/1.1
-
+GET http://localhost:3334/api/user/639a21a20796943efa7bc238 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzlhMjFhMjA3OTY5NDNlZmE3YmMyMzgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MTA0NTU0MSwiZXhwIjoxNjcxMDQ2NTQxfQ.wKgXLxTGDivDRvkSWbK_SlDahBKWBLyhpW-0UwBtdzk
 ###
 
 # Update user by ID
-PUT http://localhost:3334/api/user/b65174db-27d9-4f46-be6d-59d560260f90 HTTP/1.1
+PUT http://localhost:3334/api/user/6395fe275ab2c4bdd1a57bb1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Mzk1ZmI1MDgzOThlY2Q4ZDI1Y2MzOWMiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQzLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MDc3NDMyMiwiZXhwIjoxNjcwNzk2NTgyfQ.7BwXwqpA44iATk1FFNvsVspxLVXoTIpQG-NiXTHtINk
 Content-Type: application/json
 
 {
   "firstname": "Keks007",
-  "lastname": "Keks",
+  "lastname": "Kek",
   "dateBirth": "2020-12-12",
   "info": "qwerty",
   "specialization": "ytrewq",
@@ -18,17 +19,19 @@ Content-Type: application/json
 ###
 
 # Change password user by ID
-PUT http://localhost:3334/api/user/66f84b3d-5113-430f-a95d-f0dfd2ac73a2/change-password HTTP/1.1
+PUT http://localhost:3334/api/user/639a21a20796943efa7bc238/change-password HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzlhMjFhMjA3OTY5NDNlZmE3YmMyMzgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MTA0NTU0MSwiZXhwIjoxNjcxMDQ2NTQxfQ.wKgXLxTGDivDRvkSWbK_SlDahBKWBLyhpW-0UwBtdzk
 Content-Type: application/json
 
 {
-  "currentPassword": "1234567",
+  "currentPassword": "123456",
   "newPassword": "1234567"
 }
 ###
 
 # Leave review user by ID
-PUT  http://localhost:3334/api/user/b65174db-27d9-4f46-be6d-59d560260f90/review HTTP/1.1
+PUT  http://localhost:3334/api/user/639a21a20796943efa7bc238/review HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzlhMjFhMjA3OTY5NDNlZmE3YmMyMzgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MTA0NTU0MSwiZXhwIjoxNjcxMDQ2NTQxfQ.wKgXLxTGDivDRvkSWbK_SlDahBKWBLyhpW-0UwBtdzk
 Content-Type: application/json
 
 {

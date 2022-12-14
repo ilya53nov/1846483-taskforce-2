@@ -6,8 +6,8 @@ import { City, Collection, Review, User, UserRole } from '@taskforce/shared-type
   collection: Collection.Users,
 })
 export class TaskUserModel extends Document implements User {
-  @Prop()
-  _id: string;
+  @Prop({default: Date()})
+  _createdAt: Date;
 
   @Prop({
     required: true,
@@ -24,7 +24,6 @@ export class TaskUserModel extends Document implements User {
     unique: true,
   })
   email: string;
-
     
   @Prop({
     required: true,
@@ -48,6 +47,7 @@ export class TaskUserModel extends Document implements User {
 
   @Prop({
     required: true,
+    type: Date,
   })
   dateBirth: Date;
 
@@ -56,6 +56,8 @@ export class TaskUserModel extends Document implements User {
   })  
   passwordHash: string;
 
+  @Prop({default: null})
+  refreshTokenHash: string;
 }
 
 export const TaskUserSchema = SchemaFactory.createForClass(TaskUserModel);
