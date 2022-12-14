@@ -12,5 +12,6 @@ export interface User {
   avatar?: string;
   dateBirth: Date;
   passwordHash: string;
+  refreshTokenHash: string;
   _reviews?: Review[];
 }

@@ -5,4 +5,9 @@ export enum AuthUserDescription {
   PasswordOrLoginWrong = 'Не верный логин или пароль.',
   Created = 'Новый пользователь успешно создан.',
   Logged = 'Пользователь успешно вошёл в систему.',
+  EmailNotValid = 'Не валидная электронная почта.',
+  BirthNotValid = 'Не валидная дата рождения',
+  AccessDenied = 'Доступ запрещён',
 }
+
+export const AuthorizationBearer = 'Bearer';

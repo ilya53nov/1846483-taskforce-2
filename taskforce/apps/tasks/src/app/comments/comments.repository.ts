@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Comment } from '@taskforce/shared-types';
 import { PrismaService } from '../prisma/prisma.service';
 import { CommentEntity } from './comment.entity';
+import { CommentQuery } from './query/comment.query';
 
 @Injectable()
 export class CommentsRepository {
@@ -23,11 +24,13 @@ export class CommentsRepository {
     });
   }
 
-  public async findByTask(idTask: string): Promise<Comment[]> {
+  public async findByTask(idTask: string, { limit, page }: CommentQuery): Promise<Comment[]> {
     return await this.prisma.comment.findMany({
       where: {
         taskId: idTask
-      }
+      },
+      take: limit,
+      skip: page > 0 ? limit * (page - 1) : undefined,
     });
   }
 

@@ -7,6 +7,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskEntity } from './task.entity';
 import { TaskRdo } from './rdo/task.rdo';
 import { TaskRepository } from './task.repository';
+import { TaskQuery } from './query/task.query';
 
 @Injectable()
 export class TaskService {
@@ -30,8 +31,8 @@ export class TaskService {
     return myTasks.map((item) => fillObject(TaskRdo, item));
   }
 
-  public async getNewTasks() {
-    const newTasks = await this.taskRepository.getNewTasks();
+  public async getNewTasks(query: TaskQuery) {
+    const newTasks = await this.taskRepository.getNewTasks(query);
 
     return newTasks.map((item) => fillObject(TaskRdo, item));
   }

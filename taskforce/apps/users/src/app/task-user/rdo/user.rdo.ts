@@ -1,7 +1,8 @@
 import { City, UserRole } from '@taskforce/shared-types';
-import {Expose} from 'class-transformer';
+import {Expose, Transform} from 'class-transformer';
 
 export class UserRdo {
+  @Transform(({obj}) => obj._id.toString())
   @Expose({ name: '_id'})
   public id: string;
 

@@ -18,6 +18,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TaskRdo } from './rdo/task.rdo';
 import { ChangeStatusDto } from './dto/change-status.dto';
 import { SetExecuterDto } from './dto/set-executer.dto';
+import { TaskQuery } from './query/task.query';
 
 @ApiTags(ApiTag.Tasks)
 @Controller(Route.Tasks)
@@ -28,6 +29,7 @@ export class TaskController {
     type: CreateTaskDto,
     status: HttpStatus.CREATED,
   })
+
   @Post()
   create(@Body() createTaskDto: CreateTaskDto, @Headers('user-id') userId: string) {
     return this.taskService.create(createTaskDto, userId);
@@ -47,8 +49,8 @@ export class TaskController {
     status: HttpStatus.OK,
   })
   @Get(Route.NewTasks)
-  getNewTasks() {
-    return this.taskService.getNewTasks();
+  getNewTasks(@Query() query: TaskQuery) {
+    return this.taskService.getNewTasks(query);
   }
 
   @ApiResponse({

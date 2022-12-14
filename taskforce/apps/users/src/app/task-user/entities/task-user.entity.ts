@@ -1,6 +1,5 @@
 import { User, UserRole,City, Review} from '@taskforce/shared-types';
-import { compare, genSalt, hash } from 'bcrypt';
-import { SALT_ROUNDS } from '../task-user.constants';
+import { hash, verify} from 'argon2';
 
 export class TaskUserEntity implements User {
   public _id: string;
@@ -10,6 +9,7 @@ export class TaskUserEntity implements User {
   public firstname: string;
   public lastname: string;
   public passwordHash: string;
+  public refreshTokenHash: string;
   public role: UserRole;
   public city: City;
   public _reviews: Review[];
@@ -22,14 +22,26 @@ export class TaskUserEntity implements User {
     return {...this};
   }
 
+  private async getHash(hashString: string): Promise<string> {
+    return await hash(hashString);
+  }
+
   public async setPassword(password: string): Promise<TaskUserEntity> {
-    const salt = await genSalt(SALT_ROUNDS);
-    this.passwordHash = await hash(password, salt);
+    this.passwordHash = await this.getHash(password);
+    return this;
+  }
+
+  public async setRefreshToken(token: string): Promise<TaskUserEntity> {
+    this.refreshTokenHash = await this.getHash(token);
     return this;
   }
 
   public async comparePassword(password: string): Promise<boolean> {
-    return compare(password, this.passwordHash);
+    return await verify(this.passwordHash, password);
+  }
+
+  public async compareRefreshToken(token: string): Promise<boolean> {
+    return await verify(this.refreshTokenHash, token);
   }
 
   public fillEntity(taskUser: User) {
@@ -40,6 +52,7 @@ export class TaskUserEntity implements User {
     this.firstname = taskUser.firstname;
     this.lastname = taskUser.lastname;
     this.passwordHash = taskUser.passwordHash;
+    this.refreshTokenHash = taskUser.refreshTokenHash;
     this.role = taskUser.role;
     this.city = taskUser.city;
     this._reviews = taskUser._reviews

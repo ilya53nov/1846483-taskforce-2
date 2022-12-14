@@ -4,14 +4,14 @@ Content-Type: application/json
 User-Id: 123 
 
 {
-  "text": "класс",
-  "taskId": "7ca3b9fa-27bb-4364-80bc-3f2a1e506025"
+  "text": "класс, всё очень круто",
+  "taskId": "c18ff9ef-7951-427f-a0cf-1b824360b2ab"
 }
 
 ###
 
 # Get comments 
-GET http://localhost:3335/api/comments/task/7ca3b9fa-27bb-4364-80bc-3f2a1e506025 HTTP/1.1
+GET http://localhost:3335/api/comments/task/c18ff9ef-7951-427f-a0cf-1b824360b2ab?limit=50&page=2 HTTP/1.1
 
 ###
 

@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CRUDRepository } from '@taskforce/core';
 import { User } from '@taskforce/shared-types';
-import dayjs = require('dayjs');
-import * as crypto from 'crypto';
 import { Model } from 'mongoose';
 import { TaskUserEntity } from './entities/task-user.entity';
 import { TaskUserModel } from './task-user.model';
@@ -15,8 +13,7 @@ export class TaskUserRepository implements CRUDRepository<TaskUserEntity, string
   ) {}
 
   public async create(item: TaskUserEntity): Promise<User> {
-    const entry = { ...item.toObject(), _id: crypto.randomUUID(), _createdAt: dayjs().format(), _reviews: []};
-    const newTaskUser = new this.taskUserModel(entry);
+    const newTaskUser = new this.taskUserModel(item);
     return newTaskUser.save();
   }
 
@@ -40,6 +37,5 @@ export class TaskUserRepository implements CRUDRepository<TaskUserEntity, string
     return this.taskUserModel
       .findByIdAndUpdate(id, item.toObject(), {new: true})
       .exec();
-  }
-  
+  }  
 }

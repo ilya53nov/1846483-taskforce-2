@@ -31,7 +31,6 @@ model Task {
 }
 
 model Category {
-  //id String @id @default(uuid())
   title String  @unique
   tasks Task[]
 }
@@ -41,6 +40,6 @@ model Comment {
   createdAt DateTime @default(now())
   text String
   userId String
-  task Task @relation(fields: [taskId], references: [id])
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
   taskId  String
 }
