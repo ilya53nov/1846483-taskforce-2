@@ -1,0 +1,4 @@
+# Send email
+GET http://localhost:3333/api/email HTTP/1.1
+
+###
