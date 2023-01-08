@@ -13,12 +13,13 @@ import {
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { ApiTag, Route, TaskStatus } from '@taskforce/shared-types';
+import { ApiTag, CommandEvent, Route, Subscriber, TaskStatus } from '@taskforce/shared-types';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TaskRdo } from './rdo/task.rdo';
 import { ChangeStatusDto } from './dto/change-status.dto';
 import { SetExecuterDto } from './dto/set-executer.dto';
 import { TaskQuery } from './query/task.query';
+import { EventPattern } from '@nestjs/microservices';
 
 @ApiTags(ApiTag.Tasks)
 @Controller(Route.Tasks)
@@ -42,6 +43,16 @@ export class TaskController {
   @Get(Route.MyTasks)
   getMyTasks(@Query('status') taskStatus: TaskStatus, @Headers('user-id') userId: string) {
     return this.taskService.getMyTasks(userId, taskStatus);
+  }
+
+  @ApiResponse({
+    type: TaskRdo,
+    status: HttpStatus.OK,
+  })
+  @EventPattern({ cmd: CommandEvent.AddTask })
+  sendTasksToNotifyService(subscriber: Subscriber) {
+    
+    return this.taskService.sendTasksToNotifyService(subscriber);
   }
 
   @ApiResponse({

@@ -1,14 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { fillObject } from '@taskforce/core';
 import { CreateUserDto } from './dto/create-user.dto';
 import { TaskUserEntity } from '../task-user/entities/task-user.entity';
-import { AuthorizationBearer, AuthUserDescription } from './auth.constants';
+import { AUTHORIZATION_BEARER, AuthUserDescription } from './auth.constants';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserRdo } from '../task-user/rdo/user.rdo';
 import { TaskUserRepository } from '../task-user/task-user.repository';
 import { JwtService } from '@nestjs/jwt'
 import { JwtConfig } from '../../config/jwt.config';
-import { User, UserRole } from '@taskforce/shared-types';
+import { CommandEvent, Subscriber, User, UserRole } from '@taskforce/shared-types';
+import { ClientProxy } from '@nestjs/microservices';
+import { RABBITMQ_SERVICE } from '../../config/rabbitmq.config';
 
 type PayloadJwtService = {
   sub: string,
@@ -29,6 +31,7 @@ export class AuthService {
     private readonly taskUserRepository: TaskUserRepository,
     private readonly jwtService: JwtService,
     private readonly jwtConfig: JwtConfig,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
   ) {}
 
   public async register(userDto: CreateUserDto) {
@@ -42,9 +45,22 @@ export class AuthService {
     }
 
     const userEntity = await new TaskUserEntity(taskUser)
-      .setPassword(userDto.password)
+      .setPassword(userDto.password);
 
     const newUser = await this.taskUserRepository.create(userEntity);
+
+    const subscriber: Subscriber = {
+      email: newUser.email,
+      firstname: newUser.firstname,
+      lastname: newUser.lastname,
+      userId: newUser._id.toString(),
+      dateLastNotify: new Date(),
+    }  
+
+    this.rabbitClient.emit(
+      { cmd: CommandEvent.AddSubscriber },
+      subscriber
+    );
 
     const payload = this.getPayloadJwtService(newUser);
 
@@ -113,7 +129,7 @@ export class AuthService {
     if (!bearerToken || !email) {
       throw new UnauthorizedException(AuthUserDescription.AccessDenied);
     }
-    const refreshToken = bearerToken.replace(AuthorizationBearer, '').trim();
+    const refreshToken = bearerToken.replace(AUTHORIZATION_BEARER, '').trim();
 
     const existUser = await this.taskUserRepository.findByEmail(email);
 

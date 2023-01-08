@@ -1,4 +1,4 @@
-export const USER_ENV_FILE_PATH = 'environments/.users.env';
+export const NOTIFY_SERVICE_ENV_PATH = 'environments/.notify.env';
 
 export enum EnvValidationMessage {
   DBHostRequired = 'MongoDB host is required',
@@ -11,4 +11,9 @@ export enum EnvValidationMessage {
   RMQUserRequired = 'RabbitMQ user is required',
   RMQPasswordRequired = 'RabbitMQ password is required',
   RMQSubscriberQueue = 'RabbitMQ Subscribers Queue is required',
+  MailServerHostRequired =  'SMTP Server is required',
+  MailServerUserNameRequired = 'SMTP Server user name is required',
+  MailServerPasswordRequired = 'SMTP Server password is required',
+  MailServerDefaultFromRequired = 'Default value for mail from field is required',
+  MailServerPortRequired = 'SMTP Server port is required',
 }

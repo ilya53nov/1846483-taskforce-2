@@ -9,6 +9,7 @@ export enum Route {
   NewTasks = 'new',
   Comments = 'comments',
   Categories = 'categories',
+  TasksNotify = 'tasks-notify'
 }
 
 export const paramIdDescription = 'id';
