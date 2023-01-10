@@ -4,10 +4,10 @@ Content-Type: application/json
 User-Id: 123
 
 {
-  "header": "dsfgdsgdsdsfsdfdsfsdfsdfsdf",
-  "description": "sdgdsgdsdssssssssssssffffffffffffffffffffffffffffffffffffffffffffffffsdfffffffffffffffffffffffffffffffffffffffffffffffffsdfffffffffffffffffffffffffffffffffffffffff",
-  "categoryTitle": "JS",
-  "tags": "sdfsdssdd",
+  "header": "Починить холодильник",
+  "description": "холодильник перестал морозить, переодически дрибезжит и сам по себе выключается...........................",
+  "categoryTitle": "Бытовая техника",
+  "tags": "Холодильник",
   "cost": 1000
 }
 

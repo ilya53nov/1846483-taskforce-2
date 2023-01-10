@@ -9,3 +9,5 @@ export * from './lib/comment.interface';
 export * from './lib/review.interface';
 export * from './lib/collection.enum';
 export * from './lib/category.interface';
+export * from './lib/subscriber.interface';
+export * from './lib/command-event.enum';

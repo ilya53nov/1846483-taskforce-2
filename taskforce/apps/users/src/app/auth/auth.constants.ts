@@ -10,4 +10,4 @@ export enum AuthUserDescription {
   AccessDenied = 'Доступ запрещён',
 }
 
-export const AuthorizationBearer = 'Bearer';
+export const AUTHORIZATION_BEARER = 'Bearer';

@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { fillObject } from '@taskforce/core';
-import { TaskStatus, UserRole } from '@taskforce/shared-types';
+import { CommandEvent, Subscriber, TaskStatus, UserRole } from '@taskforce/shared-types';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { SetExecuterDto } from './dto/set-executer.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -8,11 +8,14 @@ import { TaskEntity } from './task.entity';
 import { TaskRdo } from './rdo/task.rdo';
 import { TaskRepository } from './task.repository';
 import { TaskQuery } from './query/task.query';
+import { ClientProxy } from '@nestjs/microservices';
+import { RABBITMQ_SERVICE_TASKS } from '../../config/rabbitmq.config';
 
 @Injectable()
 export class TaskService {
   constructor(
     private readonly taskRepository: TaskRepository,
+    @Inject(RABBITMQ_SERVICE_TASKS) private readonly rabbitClient: ClientProxy,
   ) {}
 
   public async create(createTaskDto: CreateTaskDto, userId: string) {   
@@ -29,6 +32,15 @@ export class TaskService {
     const myTasks = await this.taskRepository.getMyTasks(userId, userRole, taskStatus);
 
     return myTasks.map((item) => fillObject(TaskRdo, item));
+  }
+
+  public async sendTasksToNotifyService(subscriber: Subscriber) {
+    const tasks = await this.taskRepository.findAllAfterDate(new Date(subscriber.dateLastNotify));
+
+    this.rabbitClient.emit(
+      { cmd: CommandEvent.SendTask },
+      {tasks, subscriber}
+    );
   }
 
   public async getNewTasks(query: TaskQuery) {

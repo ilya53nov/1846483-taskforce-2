@@ -11,6 +11,16 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
     private readonly prisma: PrismaService
   ) {}
 
+  public async findAllAfterDate(date: Date): Promise<Task[]> {
+    return await this.prisma.task.findMany({
+      where: {
+        createdAt: {
+          gt: date
+        }
+      }
+    })
+  }
+
   public async findById(id: string): Promise<Task> {
     return await this.prisma.task.findFirst({
       where: {
