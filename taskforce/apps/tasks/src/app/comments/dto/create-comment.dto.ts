@@ -1,19 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsUUID, Length } from 'class-validator';
+import { CommentApiProperty, CommentValidation } from '../comment.constant';
 
 export class CreateCommentDto {
-  @ApiProperty({
-    description: 'Текст комментария',
-    example: 'Всё очень круто'
-  })
+  @ApiProperty(CommentApiProperty.Text)
   @IsString()
-  @Length(10, 300)
+  @Length(CommentValidation.CommentLength.min, CommentValidation.CommentLength.max)
   text: string;
 
-  @ApiProperty({
-    description: 'Индификатор задачи',
-    example: '4553453'
-  })
+  @ApiProperty(CommentApiProperty.TaskId)
   @IsUUID()
   taskId: string;
 }

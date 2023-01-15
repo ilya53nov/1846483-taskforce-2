@@ -1,22 +1,22 @@
 # Create a new comment
 POST http://localhost:3335/api/comments HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOTljMmE5ODJjNDYxZTNmMGM5MWYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzY5OTAzNCwiZXhwIjoxNjczNzk5MDM0fQ.I1zIS9Gstl9vCOlOgNL0diyDMliBwDcfEdfuLMGr0QM
 Content-Type: application/json
-User-Id: 123 
 
 {
   "text": "класс, всё очень круто",
-  "taskId": "c18ff9ef-7951-427f-a0cf-1b824360b2ab"
+  "taskId": "d783078c-f9d1-4c8c-9b0f-a923dd84efcd"
 }
 
 ###
 
 # Get comments 
-GET http://localhost:3335/api/comments/task/c18ff9ef-7951-427f-a0cf-1b824360b2ab?limit=50&page=2 HTTP/1.1
+GET http://localhost:3335/api/comments/task/0ad49542-d41a-4388-b023-20f7b8f9c534?limit=50&page=1 HTTP/1.1
 
 ###
 
 # Delete comment
-DELETE  http://localhost:3335/api/comments/201ca431-4e94-44b1-acb5-066ca929036f HTTP/1.1
-
+DELETE  http://localhost:3335/api/comments/a1af0e92-1b07-4540-a38c-5fea1d7a188e HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOGQxN2E5ODJjNDYxZTNmMGM5MTgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQyLmxvY2FsIiwicm9sZSI6ItCY0YHQv9C-0LvQvdC40YLQtdC70YwiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcwNDk2MywiZXhwIjoxNjczODA0OTYzfQ.7pA2CEe1V91u_MrfRTxybgeuvz3ROGWqhw53Kid-RP8
 
 ###

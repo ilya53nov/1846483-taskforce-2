@@ -1,18 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { City } from '@taskforce/shared-types';
+import { IsString, Length } from 'class-validator';
+import { UserValidation } from '../../auth/auth.constants';
 
 export class UpdateTaskUserDto {
   @ApiProperty({
-    description: 'Имя пользователя',
-    example: 'Иван'
-  }) 
-  firstname: string;
-
-  @ApiProperty({
-    description: 'Фамилия пользователя',
-    example: 'Иванов'
+    description: 'Имя и фамилия пользователя',
+    example: 'Иван Иванов'
   })
-  lastname: string;
+  @IsString()  
+  @Length(UserValidation.NameLength.min, UserValidation.NameLength.max)
+  username: string;
 
   @ApiProperty({
     description: 'Дата рождения пользователя',

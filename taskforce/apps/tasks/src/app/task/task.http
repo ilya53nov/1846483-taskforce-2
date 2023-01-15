@@ -1,40 +1,45 @@
 # Create a new task
 POST http://localhost:3335/api/tasks HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOTljMmE5ODJjNDYxZTNmMGM5MWYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcxODEwMywiZXhwIjoxNjczODE4MTAzfQ.rI5co4dqsYZOL246i0gBsKUBdj5lC5_MLUtsHoxZyQk
 Content-Type: application/json
-User-Id: 123
 
 {
   "header": "Починить холодильник",
   "description": "холодильник перестал морозить, переодически дрибезжит и сам по себе выключается...........................",
   "categoryTitle": "Бытовая техника",
-  "tags": "Холодильник",
+  "tags": ["asgh", " jiokj", "asgh", "dsdsf", "dssdds"],
   "cost": 1000
 }
 
 ###
 
 # Get new tasks
-GET http://localhost:3335/api/tasks/new?limit=10&page=1&categories=JS HTTP/1.1
-User-Id: 123 
+GET http://localhost:3335/api/tasks/new?limit=10&page=1&categories=Бытовая техника&tags=asd HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOGQxN2E5ODJjNDYxZTNmMGM5MTgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQyLmxvY2FsIiwicm9sZSI6ItCY0YHQv9C-0LvQvdC40YLQtdC70YwiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcwOTcyOSwiZXhwIjoxNjczODA5NzI5fQ.QOROYi2MAC4qXsMtgvmCqFn-g-R_yQyo3IIECkDLOgI
+
+###
+
+# Get new tasks
+GET http://localhost:3335/api/tasks/new?limit=10&categories=Бытовая техника HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOGQxN2E5ODJjNDYxZTNmMGM5MTgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQyLmxvY2FsIiwicm9sZSI6ItCY0YHQv9C-0LvQvdC40YLQtdC70YwiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcwOTcyOSwiZXhwIjoxNjczODA5NzI5fQ.QOROYi2MAC4qXsMtgvmCqFn-g-R_yQyo3IIECkDLOgI
 
 ###
 
 # Get my tasks
 GET http://localhost:3335/api/tasks/my-tasks?status=New HTTP/1.1
-User-Id: 123
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOTljMmE5ODJjNDYxZTNmMGM5MWYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcxODEwMywiZXhwIjoxNjczODE4MTAzfQ.rI5co4dqsYZOL246i0gBsKUBdj5lC5_MLUtsHoxZyQk
 
 ###
 
 # Get task by id
 GET http://localhost:3335/api/tasks/ed5650bb-f784-427f-81c4-83c9fb63e0fd HTTP/1.1
-User-Id: 123 
 
 ###
 
 # Update task
 PATCH http://localhost:3335/api/tasks/f4e3fc0e-6b01-44af-abf4-38d488424630 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOGQxN2E5ODJjNDYxZTNmMGM5MTgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQyLmxvY2FsIiwicm9sZSI6ItCY0YHQv9C-0LvQvdC40YLQtdC70YwiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcwOTcyOSwiZXhwIjoxNjczODA5NzI5fQ.QOROYi2MAC4qXsMtgvmCqFn-g-R_yQyo3IIECkDLOgI
 Content-Type: application/json
-User-Id: 123 
 
 {
   "header": "dsfgdsgds",
@@ -47,14 +52,14 @@ User-Id: 123
 
 # Delete my tasks
 DELETE http://localhost:3335/api/tasks/c18ff9ef-7951-427f-a0cf-1b824360b2ab HTTP/1.1
-User-Id: 123 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOGQxN2E5ODJjNDYxZTNmMGM5MTgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQyLmxvY2FsIiwicm9sZSI6ItCY0YHQv9C-0LvQvdC40YLQtdC70YwiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcwOTcyOSwiZXhwIjoxNjczODA5NzI5fQ.QOROYi2MAC4qXsMtgvmCqFn-g-R_yQyo3IIECkDLOgI
 
 ###
 
 # Change status task
 PATCH http://localhost:3335/api/tasks/ed5650bb-f784-427f-81c4-83c9fb63e0fd/change-status HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOGQxN2E5ODJjNDYxZTNmMGM5MTgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQyLmxvY2FsIiwicm9sZSI6ItCY0YHQv9C-0LvQvdC40YLQtdC70YwiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcwOTcyOSwiZXhwIjoxNjczODA5NzI5fQ.QOROYi2MAC4qXsMtgvmCqFn-g-R_yQyo3IIECkDLOgI
 Content-Type: application/json
-User-Id: 123 
 
 {
   "newStatus": "InWork"
@@ -63,24 +68,49 @@ User-Id: 123
 ###
 
 # Reaction to the task
-POST http://localhost:3335/api/tasks/b7518b68-e6b6-463f-8859-18c6b3cf520b/reaction HTTP/1.1
-User-Id: 123
+POST http://localhost:3335/api/tasks/5243db68-518b-4bad-8147-e56ba8771b55/reaction HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOGQxN2E5ODJjNDYxZTNmMGM5MTgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQyLmxvY2FsIiwicm9sZSI6ItCY0YHQv9C-0LvQvdC40YLQtdC70YwiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcwOTcyOSwiZXhwIjoxNjczODA5NzI5fQ.QOROYi2MAC4qXsMtgvmCqFn-g-R_yQyo3IIECkDLOgI
 
 ###
 
 # Set executer task
-POST http://localhost:3335/api/tasks/b7518b68-e6b6-463f-8859-18c6b3cf520b/executer HTTP/1.1
+POST http://localhost:3335/api/tasks/5243db68-518b-4bad-8147-e56ba8771b55/executer HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOTljMmE5ODJjNDYxZTNmMGM5MWYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcxODEwMywiZXhwIjoxNjczODE4MTAzfQ.rI5co4dqsYZOL246i0gBsKUBdj5lC5_MLUtsHoxZyQk
 Content-Type: application/json
-User-Id: 123 
 
 {
-  "executerId": "122"
+  "executerId": "63c28d17a982c461e3f0c918"
 }
 
 ###
 
 # Get task's reactions
-GET http://localhost:3335/api/tasks/b7518b68-e6b6-463f-8859-18c6b3cf520b/reactions HTTP/1.1
-User-Id: 123 
+GET http://localhost:3335/api/tasks/01098fd3-dfd8-4b13-8f1e-5936296b7583/reactions HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOTljMmE5ODJjNDYxZTNmMGM5MWYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcxODEwMywiZXhwIjoxNjczODE4MTAzfQ.rI5co4dqsYZOL246i0gBsKUBdj5lC5_MLUtsHoxZyQk
+
+###
+
+# Cansel task by executor
+PATCH  http://localhost:3335/api/tasks/298af23f-5030-4178-b65b-281203a4883d/cancel HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MyOGQxN2E5ODJjNDYxZTNmMGM5MTgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQyLmxvY2FsIiwicm9sZSI6ItCY0YHQv9C-0LvQvdC40YLQtdC70YwiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzcwOTcyOSwiZXhwIjoxNjczODA5NzI5fQ.QOROYi2MAC4qXsMtgvmCqFn-g-R_yQyo3IIECkDLOgI
+
+###
+
+# Upload Image
+POST http://localhost:3335/api/tasks/01098fd3-dfd8-4b13-8f1e-5936296b7583/upload-image
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MzYzk0MTFmZmY4ZmQxNDFkYTJkM2IiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3Mzc4NDI1OSwiZXhwIjoxNjczODg0MjU5fQ.ORgQkz_XuLsZaH1yLiZNDkAIoobA-Tee1diisUdUKJs
+Content-Type: multipart/form-data; boundary=Upload
+
+--Upload
+Content-Disposition: form-data; name="file"; filename="1.png"
+Content-Type: image/png
+
+< ../../../../../../markup/img/avatars/2.png
+--Upload--
+
+###
+
+# download avatar
+GET http://localhost:3335/static/8d9fd5b4-0802-4e03-ae3c-f20a7c750b83.png HTTP/1.1
 
 ###

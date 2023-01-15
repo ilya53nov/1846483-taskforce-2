@@ -8,6 +8,8 @@ import { CategoryModule } from '../category/category.module';
 import { ClientsModule } from '@nestjs/microservices';
 import { getRabbitMqConfig, RABBITMQ_SERVICE_TASKS } from '../../config/rabbitmq.config';
 import { ConfigService } from '@nestjs/config';
+import { MulterModule } from '@nestjs/platform-express';
+import { getMulterConfig } from '../../config/multer.config';
 
 @Module({
   controllers: [TaskController],
@@ -22,7 +24,11 @@ import { ConfigService } from '@nestjs/config';
         useFactory: getRabbitMqConfig,
         inject: [ConfigService]
       }
-    ])
+    ]),
+    MulterModule.registerAsync({
+      useFactory: getMulterConfig,
+      inject: [ConfigService],
+    }),
   ]
 })
 export class TaskModule {}

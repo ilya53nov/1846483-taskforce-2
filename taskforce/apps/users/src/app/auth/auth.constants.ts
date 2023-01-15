@@ -7,7 +7,30 @@ export enum AuthUserDescription {
   Logged = 'Пользователь успешно вошёл в систему.',
   EmailNotValid = 'Не валидная электронная почта.',
   BirthNotValid = 'Не валидная дата рождения',
+  InvalidAge = 'Пользователь должен быть старше 18 лет',
   AccessDenied = 'Доступ запрещён',
+}
+
+export const UserValidation = {
+  NameLength: {
+    min: 3,
+    max: 50,
+  },
+  PasswordLength: {
+    min: 6,
+    max: 12,
+  },
+  Age: {
+    min: 18,
+  },
+  InfoLength: {
+    max: 300,
+  },
+  Avatar: {
+    maxSize: 500 * 1024,
+    fileType: /image\/(jpeg|png)$/,
+  }
+
 }
 
 export const AUTHORIZATION_BEARER = 'Bearer';

@@ -30,13 +30,15 @@ export class TaskUserService {
   }
 
   public async updateUser(id: string, updateUserDto: UpdateTaskUserDto) {
+    const splittedUserName = updateUserDto.username.split(' ');
+   
     const existUser = await this.taskUserRepository.findById(id);
 
     if (!existUser) {
       throw new Error(AuthUserDescription.NotFound);
     }
 
-    const taskUser = { ...existUser, ...updateUserDto};
+    const taskUser = { ...existUser, firstname: splittedUserName[0], lastname: splittedUserName[1]};
     const userEntity = await new TaskUserEntity(taskUser);
     const updatedUser = this.taskUserRepository.update(id, userEntity);
 
@@ -45,6 +47,7 @@ export class TaskUserService {
 
   public async changePassword(changePasswordDto: ChangePasswordDto, id: string) {
     const { currentPassword, newPassword } = changePasswordDto;
+
     const existUser = await this.taskUserRepository.findById(id);
 
     if (!existUser) {

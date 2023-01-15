@@ -1,5 +1,6 @@
 import { ConfigService, registerAs } from '@nestjs/config';
 import { RmqOptions, Transport } from '@nestjs/microservices';
+import { getAmqpConnectionString } from '@taskforce/core';
 
 export const RABBITMQ_SERVICE = Symbol('RABBITMQ_SERVICE');
 
@@ -15,7 +16,7 @@ export function getRabbitMqConfig(configService: ConfigService): RmqOptions {
   const password = configService.get<string>('rmq.password');
   const host = configService.get<string>('rmq.host');
   const queue = configService.get<string>('rmq.queue');
-  const url = `amqp://${user}:${password}@${host}`;
+  const url = getAmqpConnectionString({user, password, host});
   
   return {
     transport: Transport.RMQ,

@@ -1,23 +1,33 @@
 import { City, UserRole } from '@taskforce/shared-types';
 import {ApiProperty} from '@nestjs/swagger';
-import { IsString, IsEmail, IsISO8601, IsEnum, Length } from 'class-validator';
-import { AuthUserDescription } from '../auth.constants';
+import { IsString, IsEmail, IsISO8601, IsEnum, Length, ValidatorConstraint, ValidatorConstraintInterface, Validate } from 'class-validator';
+import { AuthUserDescription, UserValidation } from '../auth.constants';
+import dayjs = require('dayjs');
+
+const AGE_VALIDATOR = 'ageValidator';
+
+@ValidatorConstraint({ name: AGE_VALIDATOR })
+export class AgeValidator implements ValidatorConstraintInterface {
+  validate(birthDate: Date): boolean {
+    const currentDate = dayjs(new Date);
+    const diffYear = currentDate.diff(dayjs(birthDate), 'years');
+
+    if (diffYear < UserValidation.Age.min) {
+      return false;
+    }
+
+    return true;
+  }
+}
 
 export class CreateUserDto {
   @ApiProperty({
-    description: 'Имя пользователя',
-    example: 'Иван'
+    description: 'Имя и фамилия пользователя',
+    example: 'Иван Иванов'
   })
   @IsString()  
-  @Length(3,50)
-  firstname: string;
-
-  @ApiProperty({
-    description: 'Фамилия пользователя',
-    example: 'Иванов'
-  })
-  @IsString()  
-  lastname: string;
+  @Length(UserValidation.NameLength.min, UserValidation.NameLength.max)
+  username: string;
 
   @ApiProperty({
     description: 'Электронная почта пользователя',
@@ -52,6 +62,7 @@ export class CreateUserDto {
   @IsISO8601({
     message: AuthUserDescription.BirthNotValid,
   })
+  @Validate(AgeValidator, {message: AuthUserDescription.InvalidAge})
   dateBirth: Date;
 
   @ApiProperty({
@@ -59,12 +70,13 @@ export class CreateUserDto {
     example: '123456'
   })
   @IsString()
-  @Length(6,12)
+  @Length(UserValidation.PasswordLength.min, UserValidation.PasswordLength.max)
   password: string;
 
   @ApiProperty({
     description: 'Аватар пользователя',
     example: 'smile.jpg'
   })
+
   avatar?: string;
 }

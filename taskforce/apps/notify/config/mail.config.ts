@@ -2,6 +2,7 @@ import { ConfigService, registerAs } from '@nestjs/config';
 import { MailerAsyncOptions } from '@nestjs-modules/mailer/dist/interfaces/mailer-async-options.interface';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import * as path from 'path';
+import { Route } from '@taskforce/shared-types';
 
 export const mailOptions = registerAs('mail', () => ({
   host: process.env.MAIL_SMTP_HOST,
@@ -37,7 +38,7 @@ export function getMailConfig(): MailerAsyncOptions {
         from: configService.get<string>('mail.from'),
       },
       template: {
-        dir: path.resolve(__dirname, 'assets'),
+        dir: path.resolve(__dirname, Route.Assets),
         adapter: new HandlebarsAdapter({'taskList': taskListHelper}),
 
         options: {

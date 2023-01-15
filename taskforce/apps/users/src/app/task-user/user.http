@@ -19,13 +19,13 @@ Content-Type: application/json
 ###
 
 # Change password user by ID
-PUT http://localhost:3334/api/user/639a21a20796943efa7bc238/change-password HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzlhMjFhMjA3OTY5NDNlZmE3YmMyMzgiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MTA0NTU0MSwiZXhwIjoxNjcxMDQ2NTQxfQ.wKgXLxTGDivDRvkSWbK_SlDahBKWBLyhpW-0UwBtdzk
+PUT http://localhost:3334/api/user/change-password HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2JmMjM0NTNhNzQzNzNiZDhkNjkyNzkiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MzQ3MTg4NywiZXhwIjoxNjczNDcyODg3fQ.eBnnQ45cD9DdP2V8PK1uj3rzLoN5cgfsKIsc0vt7sjE
 Content-Type: application/json
 
 {
   "currentPassword": "123456",
-  "newPassword": "1234567"
+  "newPassword": "123456"
 }
 ###
 

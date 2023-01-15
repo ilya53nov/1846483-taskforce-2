@@ -15,7 +15,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
     return await this.prisma.task.findMany({
       where: {
         createdAt: {
-          gt: date
+          gt: date,
         }
       }
     })
@@ -24,7 +24,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
   public async findById(id: string): Promise<Task> {
     return await this.prisma.task.findFirst({
       where: {
-        id
+        id,
       },
       include: {
         category: true,
@@ -33,14 +33,18 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
     });
   }
 
-  public async getNewTasks({ limit, page, sortDirection, categories}: TaskQuery): Promise<Task[]> {
+  public async getNewTasks({ limit, page, sortDirection, categories, tags, cities}: TaskQuery): Promise<Task[]> {
     return await this.prisma.task.findMany({
       where: {
         status: TaskStatus.New,
         category: {
           title: {
-            in: categories
+            in: categories,
           }
+        },
+        tags: tags ? {hasEvery: tags} : undefined,
+        address: {
+          in: cities,
         }
       },
       take: limit,
@@ -50,8 +54,8 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
       },
       orderBy: [
         {
-          createdAt: sortDirection
-        }
+          createdAt: sortDirection,
+        },
       ],
       skip: page > 0 ? limit * (page - 1) : undefined,
     });
@@ -60,7 +64,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
   public async destroy(id: string): Promise<void> {
     await this.prisma.task.delete({
       where: {
-        id
+        id,
       }
     });
   }
@@ -68,7 +72,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
   public async changeStatus(id: string, newStatus: string): Promise<Task> {
     return await this.prisma.task.update({
       where: {
-        id
+        id,
       },
       data: {status: newStatus}
     });
@@ -82,11 +86,11 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
     return await this.getTasksExecuter(userId, taskStatus);
   }
 
-  private async getTasksExecuter(userId: string, taskStatus: TaskStatus): Promise<Task[]> {
+  public async getTasksExecuter(userId: string, taskStatus: TaskStatus): Promise<Task[]> {
     return await this.prisma.task.findMany({
       where: {
         executerId: userId,
-        status: taskStatus
+        status: taskStatus,
       }
     });
   }
@@ -95,7 +99,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
     return await this.prisma.task.findMany({
       where: {
         authorId: userId,
-        status: taskStatus
+        status: taskStatus,
       }
     });
   }
@@ -109,10 +113,10 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
         category: {
           connectOrCreate: {
             where: {
-              title: entityData.category.title
+              title: entityData.category.title,
             },
             create: {
-              title: entityData.category.title
+              title: entityData.category.title,
             }
           }
         },
@@ -122,7 +126,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
       },
       include: {
         comments: true,
-        category: true
+        category: true,
       }
     });
   }
@@ -132,17 +136,17 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
 
     return await this.prisma.task.update({
       where: {
-        id
+        id,
       },
       data: {
         ...entityData,
         category: {
           connectOrCreate: {
             where: {
-              title: entityData.category.title
+              title: entityData.category.title,
             },
             create: {
-              title: entityData.category.title
+              title: entityData.category.title,
             }
           }
         },
@@ -160,7 +164,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
   public async setExecuter(executerId: string, taskId: string): Promise<Task> {
     return await this.prisma.task.update({
       where: {
-        id: taskId
+        id: taskId,
       },
       data: {executerId: executerId}
     });
@@ -169,7 +173,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
   public async getReactions(taskId: string) {
     return await this.prisma.task.findFirst({
       where: {
-        id: taskId
+        id: taskId,
       },
       select: {reactions: true}
     });
@@ -178,7 +182,7 @@ export class TaskRepository implements CRUDRepository<TaskEntity, string, Task> 
   public async setReactions(taskId: string, usersId: string[]): Promise<Task> {
     return await this.prisma.task.update({
       where: {
-        id: taskId
+        id: taskId,
       },
       data: {reactions: usersId}
     });

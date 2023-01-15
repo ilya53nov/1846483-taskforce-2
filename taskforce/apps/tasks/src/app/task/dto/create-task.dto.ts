@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString, Length, Min } from 'class-validator';
+import { IsNumber, IsOptional, IsString, Length, Min, Validate } from 'class-validator';
+import { INVALID_TAG, TaskValidation } from '../task.constant';
+import { TagsValidator } from './validator.dto';
 
 export class CreateTaskDto {
   @ApiProperty({
     description: 'Индификатор пользователя',
     example: 'qwe1'
   })
-  //@IsMongoId()
   userId: string;
 
   @ApiProperty({
@@ -14,7 +15,7 @@ export class CreateTaskDto {
     example: 'Починить плиту'
   })
   @IsString()
-  @Length(20, 50)
+  @Length(TaskValidation.HeaderLength.min, TaskValidation.HeaderLength.max)
   header: string;
 
   @ApiProperty({
@@ -22,7 +23,7 @@ export class CreateTaskDto {
     example: 'Не включается плита'
   })
   @IsString()
-  @Length(100, 1024)
+  @Length(TaskValidation.DescriptionLength.min, TaskValidation.DescriptionLength.max)
   description: string;
 
   @ApiProperty({
@@ -61,7 +62,7 @@ export class CreateTaskDto {
   })
   @IsOptional()
   @IsString()
-  @Length(10, 255)
+  @Length(TaskValidation.AddressLength.min, TaskValidation.AddressLength.max)
   address?: string;
 
   @ApiProperty({
@@ -69,5 +70,6 @@ export class CreateTaskDto {
     example: 'плита, сломалась плита, работа за печеньки'
   })
   @IsOptional()
+  @Validate(TagsValidator, { message: INVALID_TAG})
   tags: string[];
 }
