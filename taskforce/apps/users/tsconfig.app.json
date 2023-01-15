@@ -8,5 +8,5 @@
     "target": "es2015"
   },
   "exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "../../libs/core/src/lib/strategies/jwt-access.strategy.ts", "../../libs/core/src/lib/strategies/jwt-refresh.strategy.ts"]
 }

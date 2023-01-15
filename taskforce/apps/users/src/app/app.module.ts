@@ -3,14 +3,16 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TaskUserModule } from './task-user/task-user.module';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { USER_ENV_FILE_PATH } from './app.constant';
 import { validateEnvironments } from './env.validation';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbConfig, mongoDbOptions } from '../config/mongodb.config';
 import { TaskUserService } from './task-user/task-user.service';
-import { jwtAccessOptions, jwtRefreshOptions } from '../config/jwt.config';
 import { rabbitMqOptions } from '../config/rabbitmq.config';
+import { jwtAccessOptions, jwtRefreshOptions } from '@taskforce/core';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { getServeStaticConfig, staticOptions } from '../config/static.config';
 
 @Module({
   imports: [
@@ -18,12 +20,16 @@ import { rabbitMqOptions } from '../config/rabbitmq.config';
       cache: true,
       isGlobal: true,
       envFilePath: USER_ENV_FILE_PATH,
-      load: [mongoDbOptions, jwtAccessOptions, jwtRefreshOptions, rabbitMqOptions],
+      load: [mongoDbOptions, jwtAccessOptions, jwtRefreshOptions, rabbitMqOptions, staticOptions],
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(
       getMongoDbConfig()
     ),
+    ServeStaticModule.forRootAsync({
+      useFactory: getServeStaticConfig,
+      inject: [ConfigService],
+    }),
     TaskUserModule,
     AuthModule
   ],

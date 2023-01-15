@@ -35,7 +35,7 @@ export class TaskUserRepository implements CRUDRepository<TaskUserEntity, string
 
   public async update(id: string, item: TaskUserEntity): Promise<User> {
     return this.taskUserModel
-      .findByIdAndUpdate(id, item.toObject(), {new: true})
+      .findByIdAndUpdate({_id: id}, item.toObject(), {new: true})
       .exec();
   }  
 }

@@ -11,3 +11,4 @@ export * from './lib/collection.enum';
 export * from './lib/category.interface';
 export * from './lib/subscriber.interface';
 export * from './lib/command-event.enum';
+export * from './lib/parametr.enum';

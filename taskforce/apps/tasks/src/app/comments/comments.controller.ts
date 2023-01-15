@@ -6,11 +6,12 @@ import {
   Param,
   Delete,
   HttpStatus,
-  Headers,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ApiTag, paramIdDescription, Route, routeIdDescription } from '@taskforce/shared-types';
+import { AccessTokenGuard, GetUser } from '@taskforce/core';
+import { ApiTag, ParametrKey, Route } from '@taskforce/shared-types';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentQuery } from './query/comment.query';
@@ -26,25 +27,26 @@ export class CommentsController {
     status: HttpStatus.CREATED,
   })
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto, @Headers('user-id') idUser: string) {
-    return this.commentsService.create(idUser, createCommentDto);
+  @UseGuards(AccessTokenGuard)
+  create(@Body() createCommentDto: CreateCommentDto, @GetUser(ParametrKey.Id) userId: string) {
+    return this.commentsService.create(userId, createCommentDto);
   }
 
   @ApiResponse({
     type: CommentRdo,
     status: HttpStatus.OK,
   })
-  @Get(`${Route.Task}${routeIdDescription}`)
-  getCommentsTask(@Param(paramIdDescription) idTask: string, @Query() query: CommentQuery) {
-    return this.commentsService.getCommentsTask(idTask, query);
+  @Get(`${Route.Task}/${ParametrKey.Rout}`)
+  getCommentsTask(@Param(ParametrKey.Id) taskId: string, @Query() query: CommentQuery) {
+    return this.commentsService.getCommentsTask(taskId, query);
   }
 
   @ApiResponse({
     status: HttpStatus.NO_CONTENT,
   })
-  @Delete(':id')
-  deleteComment(@Param(paramIdDescription)id: string) {
-    return this.commentsService.deleteComment(id);
+  @Delete(ParametrKey.Rout)
+  @UseGuards(AccessTokenGuard)
+  deleteComment(@Param(ParametrKey.Id) commentId: string, @GetUser(ParametrKey.Id) userId: string) {
+    return this.commentsService.deleteComment(commentId, userId);
   }
-
 }

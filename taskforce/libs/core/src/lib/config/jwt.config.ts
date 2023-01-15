@@ -6,8 +6,8 @@ export const JWT_ACCESS_SECRET = 'jwt-access.secret';
 export const JWT_REFRESH_SECRET = 'jwt-refresh.secret';
 export const JWT_ACCESS_DESCRIPTION = 'jwt-access';
 export const JWT_REFRESH_DESCRIPTION = 'jwt-refresh';
-const LIFE_ACCESS_TIME_TOKEN = '1000s';
-const LIFE_REFRESH_TIME_TOKEN = '2000s';
+const LIFE_ACCESS_TIME_TOKEN = '2000s';
+const LIFE_REFRESH_TIME_TOKEN = '4000s';
 const ENCRYPTION_ALGORITHM = 'HS256';
 
 export const jwtAccessOptions = registerAs(JWT_ACCESS_DESCRIPTION, () => ({

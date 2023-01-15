@@ -9,12 +9,12 @@ import {
 } from '@nestjs/common';
 import { TaskUserService } from './task-user.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ApiTag, Route } from '@taskforce/shared-types';
+import { ApiTag, ParametrKey, Route } from '@taskforce/shared-types';
 import { UpdateTaskUserDto } from './dto/update-task-user.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { ReviewDto } from './dto/review.dto';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
-import { AccessTokenGuard } from '../auth/guards/access-token.guard';
+import { AccessTokenGuard, GetUser } from '@taskforce/core';
 
 @ApiTags(ApiTag.Users)
 @UseGuards(AccessTokenGuard)
@@ -22,36 +22,36 @@ import { AccessTokenGuard } from '../auth/guards/access-token.guard';
 export class TaskUserController {
   constructor(private readonly taskUserService: TaskUserService) {}
 
-  @Get(':id')
+  @Get(ParametrKey.Rout)
   @ApiResponse({
     status: HttpStatus.OK,
   })
-  async getUser(@Param('id', MongoidValidationPipe) id: string) {
-    return await this.taskUserService.getUser(id);
+  async getUser(@Param(ParametrKey.Id, MongoidValidationPipe) userId: string) {
+    return await this.taskUserService.getUser(userId);
   }
 
-  @Put(':id')
+  @Put()
   @ApiResponse({
     status: HttpStatus.OK,
   })
-  async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateTaskUserDto) {
-    return await this.taskUserService.updateUser(id, updateUserDto);
+  async updateUser(@GetUser(ParametrKey.Id) userId: string, @Body() updateUserDto: UpdateTaskUserDto) {
+    return await this.taskUserService.updateUser(userId, updateUserDto);
+  }
+  
+  @ApiResponse({
+    status: HttpStatus.OK,
+  })
+  @Put(Route.ChangePassword)
+  async changePassword(@GetUser(ParametrKey.Id) userId: string, @Body() changePasswordDto: ChangePasswordDto) {
+    return await this.taskUserService.changePassword(changePasswordDto, userId);
   }
 
-  @Put(':id/change-password')
+  @Put(`${ParametrKey.Rout}/${Route.Review}`)
   @ApiResponse({
     status: HttpStatus.OK,
   })
-  async changePassword(@Param('id') id: string, @Body() changePasswordDto: ChangePasswordDto) {
-    return await this.taskUserService.changePassword(changePasswordDto, id);
-  }
-
-  @Put(':id/review')
-  @ApiResponse({
-    status: HttpStatus.OK,
-  })
-  async leaveReview(@Param('id') id: string, @Body() reviewDto: ReviewDto) {
-    return await this.taskUserService.leaveReview(id, reviewDto);
+  async leaveReview(@Param(ParametrKey.Id) userId: string, @Body() reviewDto: ReviewDto) {
+    return await this.taskUserService.leaveReview(userId, reviewDto);
   }
 
 }

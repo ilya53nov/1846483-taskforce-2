@@ -1,11 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
+import { CategoryApiProperty } from '../category.constant';
 
 export class CreateCategoryDto {
-  @ApiProperty({
-    description: 'Наименование категории',
-    example: 'Backend'
-  })  
+  @ApiProperty(CategoryApiProperty.Title)  
   @IsString()
   title: string;
 }

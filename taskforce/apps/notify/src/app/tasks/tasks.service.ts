@@ -5,6 +5,7 @@ import { RABBITMQ_SERVICE_TASKS } from 'apps/notify/config/rabbitmq.config';
 import { EmailSubscriberRepository } from '../email-subscriber/email-subscriber.repository';
 import { EmailSubscriberEntity } from '../email-subscriber/entities/email-subscriber.entity';
 import { MailService } from '../email/email.service';
+import { SUBSCRIBER_NOT_FOUND } from './tasks.constant';
 
 @Injectable()
 export class TasksService {
@@ -18,7 +19,7 @@ export class TasksService {
       const existsSubscriber = await this.emailSubscriberRepository.findById(userId);
   
       if (!existsSubscriber) {
-        throw new Error('Пользователь не найден в подписчиках новых задач');
+        throw new Error(SUBSCRIBER_NOT_FOUND);
       }
 
       this.rabbitClient.emit(

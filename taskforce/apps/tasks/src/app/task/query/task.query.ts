@@ -13,6 +13,16 @@ export class TaskQuery {
   @IsOptional()
   public categories?: string[];
 
+  @Transform(({ value }) => value.split(QUERY_SEPARATOR).map((tags) => tags))
+  @IsArray({})
+  @IsOptional()
+  public tags?: string[];
+
+  @Transform(({ value }) => value.split(QUERY_SEPARATOR).map((cities) => cities))
+  @IsArray({})
+  @IsOptional()
+  public cities?: string[];
+
   @IsIn([SortDirection.Asc, SortDirection.Desc])
   @IsOptional()
   public sortDirection: SortDirection.Desc | SortDirection.Asc = DEFAULT_SORT_DIRECTION;

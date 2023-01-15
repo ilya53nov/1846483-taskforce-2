@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString, Length, Min } from 'class-validator';
+import { IsNumber, IsString, Length, Min, Validate } from 'class-validator';
+import { INVALID_TAG, TaskValidation } from '../task.constant';
+import { TagsValidator } from './validator.dto';
 
 export class UpdateTaskDto {
   @ApiProperty({
@@ -7,7 +9,7 @@ export class UpdateTaskDto {
     example: 'Починить плиту'
   })
   @IsString()
-  @Length(20, 50)
+  @Length(TaskValidation.HeaderLength.min, TaskValidation.HeaderLength.max)
   header: string;
 
   @ApiProperty({
@@ -15,7 +17,7 @@ export class UpdateTaskDto {
     example: 'Не включается плита'
   })
   @IsString()
-  @Length(100, 1024)
+  @Length(TaskValidation.DescriptionLength.min, TaskValidation.DescriptionLength.max)
   description: string;
 
   @ApiProperty({
@@ -50,12 +52,13 @@ export class UpdateTaskDto {
     example: 'Москва, ул. Бытовой плиты, д. 2'
   })
   @IsString()
-  @Length(10, 255)
+  @Length(TaskValidation.AddressLength.min, TaskValidation.AddressLength.max)
   address?: string;
 
   @ApiProperty({
     description: 'Список тегов к заданию',
     example: 'плита, сломалась плита, работа за печеньки'
   })
+  @Validate(TagsValidator, { message: INVALID_TAG})
   tags: string[];
 }

@@ -5,12 +5,12 @@ import { TaskUserModule } from '../task-user/task-user.module';
 import { TaskUserService } from '../task-user/task-user.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtAccessStrategy } from './strategies/jwt-access.strategy';
-import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
-import { getJwtOptions, JwtConfig } from '../../config/jwt.config';
 import { ClientsModule } from '@nestjs/microservices';
 import { getRabbitMqConfig, RABBITMQ_SERVICE } from '../../config/rabbitmq.config';
 import { ConfigService } from '@nestjs/config';
+import { getJwtOptions, JwtAccessStrategy, JwtConfig, JwtRefreshStrategy } from '@taskforce/core';
+import { MulterModule } from '@nestjs/platform-express';
+import { getMulterConfig } from '../../config/multer.config';
 
 @Module({
   controllers: [AuthController],
@@ -27,7 +27,11 @@ import { ConfigService } from '@nestjs/config';
         useFactory: getRabbitMqConfig,
         inject: [ConfigService]
       }
-    ])
+    ]),
+    MulterModule.registerAsync({
+      useFactory: getMulterConfig,
+      inject: [ConfigService],
+    }),
   ]
 })
 export class AuthModule {}

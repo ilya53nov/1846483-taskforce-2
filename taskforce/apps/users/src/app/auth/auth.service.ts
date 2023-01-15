@@ -1,5 +1,5 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { fillObject } from '@taskforce/core';
+import { fillObject, JwtConfig } from '@taskforce/core';
 import { CreateUserDto } from './dto/create-user.dto';
 import { TaskUserEntity } from '../task-user/entities/task-user.entity';
 import { AUTHORIZATION_BEARER, AuthUserDescription } from './auth.constants';
@@ -7,10 +7,10 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { UserRdo } from '../task-user/rdo/user.rdo';
 import { TaskUserRepository } from '../task-user/task-user.repository';
 import { JwtService } from '@nestjs/jwt'
-import { JwtConfig } from '../../config/jwt.config';
-import { CommandEvent, Subscriber, User, UserRole } from '@taskforce/shared-types';
+import { CommandEvent, Route, Subscriber, User, UserRole } from '@taskforce/shared-types';
 import { ClientProxy } from '@nestjs/microservices';
 import { RABBITMQ_SERVICE } from '../../config/rabbitmq.config';
+import { AvatarUserDto } from './dto/avatar-user.dto';
 
 type PayloadJwtService = {
   sub: string,
@@ -35,10 +35,11 @@ export class AuthService {
   ) {}
 
   public async register(userDto: CreateUserDto) {
-    const taskUser = { ...userDto, avatar: '', passwordHash: '', refreshTokenHash: ''};
+    const splittedUserName = userDto.username.split(' ');
 
-    const existUser = await this.taskUserRepository
-      .findByEmail(userDto.email);
+    const taskUser = { ...userDto, avatar: '', passwordHash: '', refreshTokenHash: '', firstname: splittedUserName[0], lastname: splittedUserName[1]};
+
+    const existUser = await this.taskUserRepository.findByEmail(userDto.email);
 
     if (existUser) {
       throw new UnauthorizedException(AuthUserDescription.Exists);
@@ -146,6 +147,22 @@ export class AuthService {
     this.updateRefreshToken(existUser, tokens.refreshToken);
 
     return tokens;
+  }
+
+  public async updateAvatar(userId: string, avatarUserDto: AvatarUserDto): Promise<User> {
+    const { avatar } = avatarUserDto;
+    const avatarPath = `http://${process.env.HOST}:${process.env.PORT}/${Route.Static}/${avatar}`;
+    const existUser = await this.taskUserRepository.findById(userId);
+
+    if (!existUser) {
+      throw new UnauthorizedException(AuthUserDescription.NotFound);
+    }
+
+    const user = { ...existUser, avatar: avatarPath};
+    const userEntity = await new TaskUserEntity(user);
+    const updatedUser = this.taskUserRepository.update(userId, userEntity);
+
+    return updatedUser;
   }
   
 }

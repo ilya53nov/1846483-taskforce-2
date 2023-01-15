@@ -3,10 +3,9 @@ POST http://localhost:3334/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@notfound57.local",
-  "dateBirth": "2012-02-21",
-  "firstname": "ssss",
-  "lastname": "Smith",
+  "email": "user@notfound6.local",
+  "dateBirth": "2005-01-15",
+  "username": "Иван Иванов",
   "password": "123456",
   "role": "Заказчик",
   "city": "Москва"
@@ -28,5 +27,24 @@ Content-Type: application/json
 # Refresh tokens
 GET http://localhost:3334/api/auth/refresh HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Mzk4YzhiMmU2Njg2YTRhODgwZjUzYzEiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3MDk2MTIyMywiZXhwIjoxNjcwOTYzMjIzfQ._KC8ldcgBsDNVg5vRhw1Ygu3mgEyR8pJg14Xe-C4p2I
+
+###
+
+# Upload Avatar
+POST http://localhost:3334/api/auth/upload-avatar
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MzYzk0MTFmZmY4ZmQxNDFkYTJkM2IiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3Mzc4NDI1OSwiZXhwIjoxNjczODg0MjU5fQ.ORgQkz_XuLsZaH1yLiZNDkAIoobA-Tee1diisUdUKJs
+Content-Type: multipart/form-data; boundary=Upload
+
+--Upload
+Content-Disposition: form-data; name="file"; filename="1.png"
+Content-Type: image/png
+
+< ../../../../../../markup/img/avatars/2.png
+--Upload--
+
+###
+
+# download avatar
+GET http://localhost:3334/static/d7492ea1-ec73-4d5b-ae4e-4d3fe3054dc4.png HTTP/1.1
 
 ###
