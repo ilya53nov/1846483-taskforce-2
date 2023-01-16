@@ -1,6 +1,6 @@
+import { EnvValidationMessage } from '@taskforce/shared-types';
 import { plainToInstance } from 'class-transformer';
 import { IsString, validateSync } from 'class-validator';
-import { EnvValidationMessage } from './app.constant';
 
 class EnvironmentsConfig {  
   @IsString({

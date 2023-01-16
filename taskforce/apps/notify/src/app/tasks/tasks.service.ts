@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { CommandEvent } from '@taskforce/shared-types';
-import { RABBITMQ_SERVICE_TASKS } from 'apps/notify/config/rabbitmq.config';
+import { CommandEvent, RabbitmqService } from '@taskforce/shared-types';
 import { EmailSubscriberRepository } from '../email-subscriber/email-subscriber.repository';
 import { EmailSubscriberEntity } from '../email-subscriber/entities/email-subscriber.entity';
 import { MailService } from '../email/email.service';
@@ -12,7 +11,7 @@ export class TasksService {
   constructor(
     private readonly emailSubscriberRepository: EmailSubscriberRepository,
     private readonly mailService: MailService,
-    @Inject(RABBITMQ_SERVICE_TASKS) private readonly rabbitClient: ClientProxy,
+    @Inject(RabbitmqService.Tasks) private readonly rabbitClient: ClientProxy,
   ) {}
 
     public async getTasks(userId) {

@@ -7,8 +7,9 @@ import { EmailSubscriberModel, EmailSubscriberSchema } from './email-subscriber.
 import { MailModule } from '../email/email.module';
 import { MailService } from '../email/email.service';
 import { ClientsModule } from '@nestjs/microservices';
-import { getRabbitMqConfig, RABBITMQ_SERVICE } from 'apps/notify/config/rabbitmq.config';
+import { getRabbitMqConfig } from 'apps/notify/config/rabbitmq.config';
 import { ConfigService } from '@nestjs/config';
+import { RabbitmqService } from '@taskforce/shared-types';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { ConfigService } from '@nestjs/config';
     MailModule,
     ClientsModule.registerAsync([
       {
-        name: RABBITMQ_SERVICE,
+        name: Symbol(RabbitmqService.Notify),
         useFactory: getRabbitMqConfig,
         inject: [ConfigService]
       }

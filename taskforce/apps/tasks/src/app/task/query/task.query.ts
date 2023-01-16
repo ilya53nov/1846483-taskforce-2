@@ -1,31 +1,31 @@
 import { IsArray, IsIn, IsNumber, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { DEFAULT_SORT_DIRECTION, DEFAULT_TASK_COUNT_LIMIT, QUERY_SEPARATOR, SortDirection } from '../task.constant';
+import { SortDirection, TaskQueryParametr } from '../task.constant';
 
 export class TaskQuery {
-  @Transform(({ value } ) => +value || DEFAULT_TASK_COUNT_LIMIT)
+  @Transform(({ value } ) => +value || TaskQueryParametr.DefaultTaskCountLimit)
   @IsNumber()
   @IsOptional()
-  public limit = DEFAULT_TASK_COUNT_LIMIT;
+  public limit = TaskQueryParametr.DefaultTaskCountLimit;
 
-  @Transform(({ value }) => value.split(QUERY_SEPARATOR).map((categoryTitle) => categoryTitle))
+  @Transform(({ value }) => value.split(TaskQueryParametr.Separator).map((categoryTitle) => categoryTitle))
   @IsArray({})
   @IsOptional()
   public categories?: string[];
 
-  @Transform(({ value }) => value.split(QUERY_SEPARATOR).map((tags) => tags))
+  @Transform(({ value }) => value.split(TaskQueryParametr.Separator).map((tags) => tags))
   @IsArray({})
   @IsOptional()
   public tags?: string[];
 
-  @Transform(({ value }) => value.split(QUERY_SEPARATOR).map((cities) => cities))
+  @Transform(({ value }) => value.split(TaskQueryParametr.Separator).map((cities) => cities))
   @IsArray({})
   @IsOptional()
   public cities?: string[];
 
   @IsIn([SortDirection.Asc, SortDirection.Desc])
   @IsOptional()
-  public sortDirection: SortDirection.Desc | SortDirection.Asc = DEFAULT_SORT_DIRECTION;
+  public sortDirection: SortDirection.Desc | SortDirection.Asc = TaskQueryParametr.DefaultSortDirection;
 
   @Transform(({ value }) => +value)
   @IsOptional()

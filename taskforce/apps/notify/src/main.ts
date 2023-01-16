@@ -7,7 +7,6 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { getRabbitMqConfig, getTasksRabbitMqConfig } from '../config/rabbitmq.config';
-
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {

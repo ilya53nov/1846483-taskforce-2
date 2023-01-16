@@ -7,12 +7,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { USER_ENV_FILE_PATH } from './app.constant';
 import { validateEnvironments } from './env.validation';
 import { MongooseModule } from '@nestjs/mongoose';
-import { getMongoDbConfig, mongoDbOptions } from '../config/mongodb.config';
 import { TaskUserService } from './task-user/task-user.service';
 import { rabbitMqOptions } from '../config/rabbitmq.config';
-import { jwtAccessOptions, jwtRefreshOptions } from '@taskforce/core';
+import { getMongoDbConfig, getServeStaticConfig, jwtAccessOptions, jwtRefreshOptions, mongoDbOptions, staticOptions } from '@taskforce/core';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { getServeStaticConfig, staticOptions } from '../config/static.config';
 
 @Module({
   imports: [

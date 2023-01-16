@@ -1,39 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { City } from '@taskforce/shared-types';
 import { IsString, Length } from 'class-validator';
+import { UserApiProperty } from '../../app.constant';
 import { UserValidation } from '../../auth/auth.constants';
 
 export class UpdateTaskUserDto {
-  @ApiProperty({
-    description: 'Имя и фамилия пользователя',
-    example: 'Иван Иванов'
-  })
+  @ApiProperty(UserApiProperty.Username)
   @IsString()  
   @Length(UserValidation.NameLength.min, UserValidation.NameLength.max)
   username: string;
 
-  @ApiProperty({
-    description: 'Дата рождения пользователя',
-    example: '1995-05-11'
-  })
+  @ApiProperty(UserApiProperty.DateBirth)
   dateBirth: Date;
 
-  @ApiProperty({
-    description: 'Информация о себе',
-    example: 'Я начинающий специалист'
-  })  
+  @ApiProperty(UserApiProperty.Info)  
   info: string;
 
-  @ApiProperty({
-    description: 'Список навыков пользователя',
-    example: 'JS, TS'
-  })
+  @ApiProperty(UserApiProperty.Specialization)
   specialization: string;
 
-  @ApiProperty({
-    description: 'Город из списка',
-    enum: City,
-    example: 'Москва'
-  })  
+  @ApiProperty(UserApiProperty.City)  
   city: City;
 }

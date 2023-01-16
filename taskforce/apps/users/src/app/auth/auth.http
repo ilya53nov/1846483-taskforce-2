@@ -3,7 +3,7 @@ POST http://localhost:3334/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@notfound6.local",
+  "email": "user@notfound2.local",
   "dateBirth": "2005-01-15",
   "username": "Иван Иванов",
   "password": "123456",
@@ -32,7 +32,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2Mzk4YzhiM
 
 # Upload Avatar
 POST http://localhost:3334/api/auth/upload-avatar
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MzYzk0MTFmZmY4ZmQxNDFkYTJkM2IiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6IlNtaXRoIiwiZmlyc3RuYW1lIjoic3NzcyIsImlhdCI6MTY3Mzc4NDI1OSwiZXhwIjoxNjczODg0MjU5fQ.ORgQkz_XuLsZaH1yLiZNDkAIoobA-Tee1diisUdUKJs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2M1OWU5ZWYwYmE3MGJiYjA0ZjNjMTMiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQxLmxvY2FsIiwicm9sZSI6ItCX0LDQutCw0LfRh9C40LoiLCJsYXN0bmFtZSI6ItCY0LLQsNC90L7QsiIsImZpcnN0bmFtZSI6ItCY0LLQsNC9IiwiaWF0IjoxNjczODk1NTg1LCJleHAiOjE2NzM4OTc1ODV9.kXOa0vCm1pgMY3vXi9xN-VBCjjp4zqDbqNQJckC8g4I
 Content-Type: multipart/form-data; boundary=Upload
 
 --Upload
@@ -45,6 +45,6 @@ Content-Type: image/png
 ###
 
 # download avatar
-GET http://localhost:3334/static/d7492ea1-ec73-4d5b-ae4e-4d3fe3054dc4.png HTTP/1.1
+GET http://localhost:3334/static/52438ebb-7774-4aac-82f3-03928166cb9e.png HTTP/1.1
 
 ###

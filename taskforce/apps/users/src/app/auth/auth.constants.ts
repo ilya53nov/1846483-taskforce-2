@@ -9,6 +9,7 @@ export enum AuthUserDescription {
   BirthNotValid = 'Не валидная дата рождения',
   InvalidAge = 'Пользователь должен быть старше 18 лет',
   AccessDenied = 'Доступ запрещён',
+  InvalidTypeAvatar = 'Не верный тип аватара',
 }
 
 export const UserValidation = {

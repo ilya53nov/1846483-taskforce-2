@@ -1,5 +1,5 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { fillObject, JwtConfig } from '@taskforce/core';
+import { fillObject, getImageStaticPath, JwtConfig } from '@taskforce/core';
 import { CreateUserDto } from './dto/create-user.dto';
 import { TaskUserEntity } from '../task-user/entities/task-user.entity';
 import { AUTHORIZATION_BEARER, AuthUserDescription } from './auth.constants';
@@ -7,9 +7,8 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { UserRdo } from '../task-user/rdo/user.rdo';
 import { TaskUserRepository } from '../task-user/task-user.repository';
 import { JwtService } from '@nestjs/jwt'
-import { CommandEvent, Route, Subscriber, User, UserRole } from '@taskforce/shared-types';
+import { CommandEvent, RabbitmqService, Route, Subscriber, User, UserRole } from '@taskforce/shared-types';
 import { ClientProxy } from '@nestjs/microservices';
-import { RABBITMQ_SERVICE } from '../../config/rabbitmq.config';
 import { AvatarUserDto } from './dto/avatar-user.dto';
 
 type PayloadJwtService = {
@@ -31,7 +30,7 @@ export class AuthService {
     private readonly taskUserRepository: TaskUserRepository,
     private readonly jwtService: JwtService,
     private readonly jwtConfig: JwtConfig,
-    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
+    @Inject(RabbitmqService.Notify) private readonly rabbitClient: ClientProxy,
   ) {}
 
   public async register(userDto: CreateUserDto) {
@@ -151,7 +150,7 @@ export class AuthService {
 
   public async updateAvatar(userId: string, avatarUserDto: AvatarUserDto): Promise<User> {
     const { avatar } = avatarUserDto;
-    const avatarPath = `http://${process.env.HOST}:${process.env.PORT}/${Route.Static}/${avatar}`;
+    const avatarPath = getImageStaticPath(process.env.HOST, process.env.PORT, Route.Static, avatar); // `http://${process.env.HOST}:${process.env.PORT}/${Route.Static}/${avatar}`;
     const existUser = await this.taskUserRepository.findById(userId);
 
     if (!existUser) {

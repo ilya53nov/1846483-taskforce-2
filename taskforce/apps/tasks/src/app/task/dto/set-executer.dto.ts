@@ -1,11 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
+import { TaskApiProperty } from '../task.constant';
 
 export class SetExecuterDto {
-  @ApiProperty({
-    description: 'Индификатор исполнителя',
-    example: '123412412'
-  })
+  @ApiProperty(TaskApiProperty.ExecutorId)
   @IsString()
   executerId: string;
 }

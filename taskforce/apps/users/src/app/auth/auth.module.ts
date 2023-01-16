@@ -6,11 +6,11 @@ import { TaskUserService } from '../task-user/task-user.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ClientsModule } from '@nestjs/microservices';
-import { getRabbitMqConfig, RABBITMQ_SERVICE } from '../../config/rabbitmq.config';
+import { getRabbitMqConfig } from '../../config/rabbitmq.config';
 import { ConfigService } from '@nestjs/config';
-import { getJwtOptions, JwtAccessStrategy, JwtConfig, JwtRefreshStrategy } from '@taskforce/core';
+import { getJwtOptions, getMulterConfig, JwtAccessStrategy, JwtConfig, JwtRefreshStrategy } from '@taskforce/core';
 import { MulterModule } from '@nestjs/platform-express';
-import { getMulterConfig } from '../../config/multer.config';
+import { RabbitmqService } from '@taskforce/shared-types';
 
 @Module({
   controllers: [AuthController],
@@ -23,7 +23,7 @@ import { getMulterConfig } from '../../config/multer.config';
     }),
     ClientsModule.registerAsync([
       {
-        name: RABBITMQ_SERVICE,
+        name: RabbitmqService.Notify,
         useFactory: getRabbitMqConfig,
         inject: [ConfigService]
       }

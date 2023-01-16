@@ -3,6 +3,7 @@ import {ApiProperty} from '@nestjs/swagger';
 import { IsString, IsEmail, IsISO8601, IsEnum, Length, ValidatorConstraint, ValidatorConstraintInterface, Validate } from 'class-validator';
 import { AuthUserDescription, UserValidation } from '../auth.constants';
 import dayjs = require('dayjs');
+import { UserApiProperty } from '../../app.constant';
 
 const AGE_VALIDATOR = 'ageValidator';
 
@@ -21,62 +22,38 @@ export class AgeValidator implements ValidatorConstraintInterface {
 }
 
 export class CreateUserDto {
-  @ApiProperty({
-    description: 'Имя и фамилия пользователя',
-    example: 'Иван Иванов'
-  })
+  @ApiProperty(UserApiProperty.Username)
   @IsString()  
   @Length(UserValidation.NameLength.min, UserValidation.NameLength.max)
   username: string;
 
-  @ApiProperty({
-    description: 'Электронная почта пользователя',
-    example: 'user@user.ru'
-  })
+  @ApiProperty(UserApiProperty.Email)
   @IsEmail(
     {},
     {message: AuthUserDescription.EmailNotValid},
   )
   email: string;
 
-  @ApiProperty({
-    description: 'Город из списка',
-    enum: City,
-    example: 'Москва'
-  })
+  @ApiProperty(UserApiProperty.City)
   @IsEnum(City)
   city: City;
 
-  @ApiProperty({
-    description: 'Роль пользователя',
-    enum: UserRole,
-    example: 'Исполнитель'
-  })
+  @ApiProperty(UserApiProperty.Role)
   @IsEnum(UserRole)
   role: UserRole;
 
-  @ApiProperty({
-    description: 'Дата рождения пользователя',
-    example: '1995-05-11'
-  })
+  @ApiProperty(UserApiProperty.DateBirth)
   @IsISO8601({
     message: AuthUserDescription.BirthNotValid,
   })
   @Validate(AgeValidator, {message: AuthUserDescription.InvalidAge})
   dateBirth: Date;
 
-  @ApiProperty({
-    description: 'Пароль пользователя',
-    example: '123456'
-  })
+  @ApiProperty(UserApiProperty.Password)
   @IsString()
   @Length(UserValidation.PasswordLength.min, UserValidation.PasswordLength.max)
   password: string;
 
-  @ApiProperty({
-    description: 'Аватар пользователя',
-    example: 'smile.jpg'
-  })
-
+  @ApiProperty(UserApiProperty.Avatar)
   avatar?: string;
 }

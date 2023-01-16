@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
+import { getMongoDbConfig, mongoDbOptions } from '@taskforce/core';
+import { RabbitmqService } from '@taskforce/shared-types';
 import { mailOptions } from 'apps/notify/config/mail.config';
-import { getMongoDbConfig, mongoDbOptions } from 'apps/notify/config/mongodb.config';
-import { getRabbitMqConfig, rabbitMqOptions, RABBITMQ_SERVICE } from 'apps/notify/config/rabbitmq.config';
+import { getRabbitMqConfig, rabbitMqOptions } from 'apps/notify/config/rabbitmq.config';
 import { NOTIFY_SERVICE_ENV_PATH } from './app.constant';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -27,7 +28,7 @@ import { TasksService } from './tasks/tasks.service';
     }),
     ClientsModule.registerAsync([
       {
-        name: RABBITMQ_SERVICE,
+        name: RabbitmqService.Notify,
         useFactory: getRabbitMqConfig,
         inject: [ConfigService]
       }

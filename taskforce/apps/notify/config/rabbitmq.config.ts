@@ -2,9 +2,6 @@ import { ConfigService, registerAs}  from '@nestjs/config';
 import { RmqOptions, Transport } from '@nestjs/microservices';
 import { getAmqpConnectionString } from '@taskforce/core';
 
-export const RABBITMQ_SERVICE = Symbol('RABBITMQ_SERVICE');
-export const RABBITMQ_SERVICE_TASKS = Symbol('RABBITMQ_SERVICE_TASKS');
-
 export const rabbitMqOptions = registerAs('rmq', () => ({
   user: process.env.RABBIT_USER,
   password: process.env.RABBIT_PASSWORD,

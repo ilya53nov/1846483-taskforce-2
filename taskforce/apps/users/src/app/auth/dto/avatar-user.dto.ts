@@ -1,7 +1,7 @@
 import { Matches } from 'class-validator';
-import { UserValidation } from '../auth.constants';
+import { AuthUserDescription, UserValidation } from '../auth.constants';
 
 export class AvatarUserDto {
-  @Matches(UserValidation.Avatar.fileType, { message: 'Avatar must be jpg, png' })
+  @Matches(UserValidation.Avatar.fileType, { message: AuthUserDescription.InvalidTypeAvatar })
   public avatar: string;
 }

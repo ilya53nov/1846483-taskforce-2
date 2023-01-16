@@ -1,6 +1,6 @@
 import { ForbiddenException, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { fillObject, transformTags } from '@taskforce/core';
-import { CommandEvent, Route, Subscriber, Task, TaskStatus, UserRole } from '@taskforce/shared-types';
+import { fillObject, getImageStaticPath, transformTags } from '@taskforce/core';
+import { CommandEvent, RabbitmqService, Route, Subscriber, Task, TaskStatus, UserRole } from '@taskforce/shared-types';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { SetExecuterDto } from './dto/set-executer.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
@@ -9,16 +9,15 @@ import { TaskRdo } from './rdo/task.rdo';
 import { TaskRepository } from './task.repository';
 import { TaskQuery } from './query/task.query';
 import { ClientProxy } from '@nestjs/microservices';
-import { RABBITMQ_SERVICE_TASKS } from '../../config/rabbitmq.config';
-import { BUSY_EXECUTOR, INVALID_EXECUTOR, INVALID_TASK_STATUS, NOT_FOUND_EXECUTER, NOT_FOUND_TASK, NOT_OWNER } from './task.constant';
 import { NewTaskRdo } from './rdo/new-task.rdo';
 import { ImageTaskDto } from './dto/image-task.dto';
+import { TaskExceptionDescription, UserExceptionDescription } from './task.constant';
 
 @Injectable()
 export class TaskService {
   constructor(
     private readonly taskRepository: TaskRepository,
-    @Inject(RABBITMQ_SERVICE_TASKS) private readonly rabbitClient: ClientProxy,
+    @Inject(RabbitmqService.Tasks) private readonly rabbitClient: ClientProxy,
   ) {}
 
   public async create(createTaskDto: CreateTaskDto, userId: string) {   
@@ -79,17 +78,17 @@ export class TaskService {
     const taskExecuterId: string | null = task.executerId;
 
     if (!taskExecuterId) {
-      throw new NotFoundException(NOT_FOUND_EXECUTER);
+      throw new NotFoundException(UserExceptionDescription.NotFoundExecutor);
     }
 
     if (!taskExecuterId.includes(userId)) {
-      throw new ForbiddenException(INVALID_EXECUTOR);
+      throw new ForbiddenException(UserExceptionDescription.InvalidExecutor);
     }
 
     const currentTaskStatus = task.status;
 
     if (currentTaskStatus !== TaskStatus.InWork) {
-      throw new ForbiddenException(INVALID_TASK_STATUS);
+      throw new ForbiddenException(TaskExceptionDescription.InvalidStatus);
     }
 
     await this.taskRepository.changeStatus(taskId, TaskStatus.Cancelled);
@@ -125,7 +124,7 @@ export class TaskService {
     const currentTaskStatus = task.status;
 
     if (requiredStatus !== currentTaskStatus) {
-      throw new ForbiddenException(INVALID_TASK_STATUS);
+      throw new ForbiddenException(TaskExceptionDescription.InvalidStatus);
     }    
 
     const updatedTask = await this.taskRepository.changeStatus(taskId, newStatus);
@@ -150,13 +149,13 @@ export class TaskService {
     const task = await this.checkTask(taskId);
 
     if (!task.reactions.some((item) => item.includes(executerDto.executerId))) {
-      throw new NotFoundException(NOT_FOUND_EXECUTER);
+      throw new NotFoundException(UserExceptionDescription.NotFoundExecutor);
     }
 
     const tasksExecuter = await this.taskRepository.getTasksExecuter(executerDto.executerId, TaskStatus.InWork);
     
     if (tasksExecuter.length > 0) {
-      throw new ForbiddenException(BUSY_EXECUTOR);
+      throw new ForbiddenException(UserExceptionDescription.BusyExecutor);
     }
     
     const updatedTask = await this.changeStatus(taskId, userId, TaskStatus.InWork);
@@ -170,7 +169,7 @@ export class TaskService {
     const task = await this.checkTask(taskId);
 
     if (task.authorId !== userId) {
-      throw new ForbiddenException(NOT_OWNER);
+      throw new ForbiddenException(UserExceptionDescription.NotOwner);
     }    
   }
 
@@ -178,7 +177,7 @@ export class TaskService {
     const task = await this.taskRepository.findById(taskId);
 
     if (!task) {
-      throw new NotFoundException(NOT_FOUND_TASK);
+      throw new NotFoundException(TaskExceptionDescription.NotFound);
     }
 
     return task;
@@ -186,11 +185,11 @@ export class TaskService {
 
   public async updateImage(taskId: string, imageTaskDto: ImageTaskDto): Promise<Task> {
     const { image } = imageTaskDto;
-    const imagePath = `http://${process.env.HOST}:${process.env.PORT}/${Route.Static}/${image}`;
+    const imagePath = getImageStaticPath(process.env.HOST, process.env.PORT, Route.Static, image);
     const existTask = await this.taskRepository.findById(taskId);
 
     if (!existTask) {
-      throw new NotFoundException(NOT_FOUND_TASK);
+      throw new NotFoundException(TaskExceptionDescription.NotFound);
     }
 
     const task = { ...existTask, image: imagePath};

@@ -11,3 +11,7 @@ export function getMongoConnectionString({username, password, host, port, databa
 export function getAmqpConnectionString({user, password, host}): string {
   return `amqp://${user}:${password}@${host}`;
 }
+
+export function getImageStaticPath(host: string, port: string, staticPath: string, image: string): string {
+  return `http://${host}:${port}/${staticPath}/${image}`;
+}

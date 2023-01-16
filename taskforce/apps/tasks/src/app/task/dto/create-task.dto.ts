@@ -1,74 +1,47 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString, Length, Min, Validate } from 'class-validator';
-import { INVALID_TAG, TaskValidation } from '../task.constant';
+import { INVALID_TAG, TaskApiProperty, TaskValidation } from '../task.constant';
 import { TagsValidator } from './validator.dto';
 
 export class CreateTaskDto {
-  @ApiProperty({
-    description: 'Индификатор пользователя',
-    example: 'qwe1'
-  })
+  @ApiProperty(TaskApiProperty.UserId)
   userId: string;
 
-  @ApiProperty({
-    description: 'Заголовок задания',
-    example: 'Починить плиту'
-  })
+  @ApiProperty(TaskApiProperty.Header)
   @IsString()
   @Length(TaskValidation.HeaderLength.min, TaskValidation.HeaderLength.max)
   header: string;
 
-  @ApiProperty({
-    description: 'Описание задания',
-    example: 'Не включается плита'
-  })
+  @ApiProperty(TaskApiProperty.Description)
   @IsString()
   @Length(TaskValidation.DescriptionLength.min, TaskValidation.DescriptionLength.max)
   description: string;
 
-  @ApiProperty({
-    description: 'Категория задания',
-    example: 'Бытовая техника'
-  })
+  @ApiProperty(TaskApiProperty.CategoryTitle)
   @IsString()
   categoryTitle: string;
 
-  @ApiProperty({
-    description: 'Стоимость',
-    example: '1000'
-  })
+  @ApiProperty(TaskApiProperty.Cost)
   @IsOptional()
   @IsNumber()
-  @Min(0)
+  @Min(TaskValidation.CostMin)
   cost?: number;
 
-  @ApiProperty({
-    description: 'Срок исполнения',
-    example: '12.12.2022'
-  })
+  @ApiProperty(TaskApiProperty.DateExecutionAt)
   @IsOptional()
   dateExecutionAt?: Date;
 
-  @ApiProperty({
-    description: 'Изображение',
-    example: 'плита.jpg'
-  })
+  @ApiProperty(TaskApiProperty.Image)
   @IsOptional()
   image?: string;
 
-  @ApiProperty({
-    description: 'Адрес',
-    example: 'Москва, ул. Бытовой плиты, д. 2'
-  })
+  @ApiProperty(TaskApiProperty.Address)
   @IsOptional()
   @IsString()
   @Length(TaskValidation.AddressLength.min, TaskValidation.AddressLength.max)
   address?: string;
 
-  @ApiProperty({
-    description: 'Список тегов к заданию',
-    example: 'плита, сломалась плита, работа за печеньки'
-  })
+  @ApiProperty(TaskApiProperty.Tags)
   @IsOptional()
   @Validate(TagsValidator, { message: INVALID_TAG})
   tags: string[];

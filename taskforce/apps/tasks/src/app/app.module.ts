@@ -9,10 +9,9 @@ import { rabbitMqOptions } from '../config/rabbitmq.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TASKS_ENV_FILE_PATH } from './app.constant';
 import { validateEnvironments } from './env.validation';
-import { getJwtOptions, jwtAccessOptions, JwtAccessStrategy } from '@taskforce/core';
+import { getJwtOptions, getServeStaticConfig, jwtAccessOptions, JwtAccessStrategy, staticOptions } from '@taskforce/core';
 import { JwtModule } from '@nestjs/jwt';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { getServeStaticConfig, staticOptions } from '../config/static.config';
 
 @Module({
   imports: [

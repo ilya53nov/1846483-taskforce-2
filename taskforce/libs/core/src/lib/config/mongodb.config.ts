@@ -1,8 +1,7 @@
 import { ConfigService, registerAs } from '@nestjs/config';
 import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
 import { getMongoConnectionString } from '@taskforce/core';
-
-const DECIMAL_SYSTEM = 10;
+import { DECIMAL_SYSTEM } from '@taskforce/shared-types';
 
 export const mongoDbOptions = registerAs('database', () => ({
   database: process.env.MONGO_DB,
